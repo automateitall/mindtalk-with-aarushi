@@ -8,13 +8,12 @@ prototypes this build implements live in `design/` for reference.
 
 ## Status
 
-**Home, About, and three service pages** (Hypnotherapy, Counselling
-Psychology, Expressive Arts Therapy) on a reusable template, all
-responsive across three tiers (mobile / tablet / desktop). Home was
-implemented from three Claude Design exports; About and the service pages
-were built from written specs + copy (no Claude Design mockups), reusing
-the same components, tokens, and breakpoint system for visual
-consistency.
+**Home, About, a Services hub, and three service pages** (Hypnotherapy,
+Counselling Psychology, Expressive Arts Therapy) on a reusable template,
+all responsive across three tiers (mobile / tablet / desktop). Home was
+implemented from three Claude Design exports; every other page was built
+from written specs + copy (no Claude Design mockups), reusing the same
+components, tokens, and breakpoint system for visual consistency.
 
 - `design/project/MindTalk Homepage.dc.html` — mobile ("2b — Warm Organic",
   locked in during design review)
@@ -91,11 +90,28 @@ Claude. The only pending items across all three are the credential
 expansions each copy doc itself flagged (CHI-USA, UNESCO-CIDS, RCI
 registration/degree).
 
-The rest of the sitemap (Services overview, remaining specialty pages —
-Anxiety & Stress, Depression, Trauma/PTSD, Relationships/Family, Work
-Stress & Burnout, Online Therapy — How I Work, Fees, FAQ, Blog,
-Contact/Book, Privacy Policy) is planned per the Website Plan and Build
-Spec docs but not yet built.
+**`/services`** (`servicesHub` in `services.ts`) is the overview/index
+page: a tight hero, three clickable service cards (color-echoing each
+page's own `heroAccent`) as the visual centrepiece, a compressed one-line
+"blend" note sitting directly under the cards, and a closing CTA.
+Deliberately built dense rather than airy — it's a signpost page, not a
+landing hero — so it skips the homepage's generous section spacing, and
+has no standalone format/fees section (that content lives on the future
+Fees page, not duplicated here per the redesign notes). Coexists as an
+Astro static route alongside the `services/[slug]` dynamic route with no
+conflict.
+
+**Fee correction:** the Services hub copy specified a flat ₹1,200 for
+both in-person and online sessions, which contradicted the homepage's
+previous ₹1,500 (in-person) / ₹1,200 (online) split. The user confirmed
+₹1,200 flat is correct — `site.fees` now reflects that, so the homepage's
+Fees section updated automatically (it reads from the same config).
+
+The rest of the sitemap (remaining specialty pages — Anxiety & Stress,
+Depression, Trauma/PTSD, Relationships/Family, Work Stress & Burnout,
+Online Therapy — How I Work, Fees, FAQ, Blog, Contact/Book, Privacy
+Policy) is planned per the Website Plan and Build Spec docs but not yet
+built.
 
 ## Running locally
 
@@ -129,12 +145,14 @@ src/
 │   │                  concerns/testimonials/about content — single source
 │   │                  of truth
 │   └── services.ts    service-page content keyed by slug (hypnotherapy,
-│                      counselling-psychology, expressive-arts-therapy)
+│                      counselling-psychology, expressive-arts-therapy),
+│                      plus servicesHub for the /services overview page
 ├── layouts/Layout.astro  page chrome: meta tags, nav, footer, sticky CTA bar
 ├── pages/
 │   ├── index.astro         Home
 │   ├── about.astro         About Aarushi
 │   └── services/
+│       ├── index.astro     Services hub/overview
 │       └── [slug].astro    reusable service-page template
 └── styles/global.css  design tokens + the `.wrap` container (three tiers:
                        480px mobile column below `md`, the tablet design's

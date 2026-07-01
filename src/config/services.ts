@@ -441,3 +441,58 @@ export const services: Record<string, ServiceContent> = {
     footCrisisNote,
   },
 };
+
+export interface ServiceCard {
+  slug: string;
+  title: string;
+  description: string;
+  color: string;
+}
+
+export const servicesHub = {
+  seoTitle: "Therapy Services in Delhi — Counselling, Hypnotherapy & Expressive Arts | MindTalk with Aarushi",
+  seoDescription:
+    "Warm, personalised therapy with Aarushi Sabharwal in Gole Market, Delhi & online — counselling psychology, hypnotherapy, and expressive arts therapy, tailored to you.",
+  eyebrow: "How I can help",
+  headline: "Different ways forward — all in one warm, safe space",
+  lead: "Everyone arrives with something different, so I don't work one-size-fits-all. I offer three complementary approaches — and often blend them — to find what genuinely helps you. Not sure which fits? That's normal. We'll figure it out together.",
+
+  // Colors echo each service page's own heroAccent (sage=calm/Counselling,
+  // balanced sage-50=Hypnotherapy, clay=warm/Expressive Arts).
+  cards: [
+    {
+      slug: "counselling-psychology",
+      title: "Counselling Psychology",
+      description:
+        "A warm, confidential space to talk things through and be truly heard — the heart of my practice. Helpful for anxiety, low mood, relationships, stress, and life's harder moments.",
+      color: "var(--color-sage-100)",
+    },
+    {
+      slug: "hypnotherapy",
+      title: "Hypnotherapy",
+      description:
+        "A gentle, deeply relaxed state that helps ease anxiety and shift stuck patterns — not stage tricks, and you stay fully in control throughout.",
+      color: "var(--color-sage-50)",
+    },
+    {
+      slug: "expressive-arts-therapy",
+      title: "Expressive Arts Therapy",
+      description:
+        "A creative, gentle way to explore feelings that are hard to put into words. No artistic skill needed — it's about expression, not skill.",
+      color: "var(--color-clay-200)",
+    },
+  ] satisfies ServiceCard[],
+
+  // Compressed 2-line band under the cards — not a full section. Format/fee
+  // info lives on the Fees page, not duplicated here (see redesign notes).
+  blendNote:
+    "Because I'm trained across all three, we're never limited to one path — we use whatever helps you move forward, always at your pace.",
+
+  cta: {
+    heading: "Not sure where to start?",
+    subhead:
+      'You don\'t need to know which approach you need — just reach out, and we\'ll find the right way forward together. A first message can be as simple as "hi."',
+  },
+
+  footCrisisNote,
+};

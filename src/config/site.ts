@@ -38,9 +38,10 @@ export const site = {
     reviewCount: "120+",
   },
 
+  // Flat ₹1,200 either way, confirmed by user (was ₹1,500/₹1,200 split — outdated).
   fees: {
     intro: "50-minute sessions, no hidden costs. Choose whatever feels most comfortable for you.",
-    inPerson: { label: "In-person", price: "₹1,500", note: "Gole Market, New Delhi · 50 min" },
+    inPerson: { label: "In-person", price: "₹1,200", note: "Gole Market, New Delhi · 50 min" },
     online: { label: "Online", price: "₹1,200", note: "Video, anywhere in India · 50 min" },
   },
 
