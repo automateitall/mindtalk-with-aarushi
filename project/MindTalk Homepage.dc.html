@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: #E3D6CA; font-family: 'Hanken Grotesk', sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  .app { position: relative; max-width: 480px; margin: 0 auto; background: #F4EAE1; min-height: 100vh; overflow: hidden; padding-bottom: 96px; }
+  .ctabar { position: fixed; left: 50%; transform: translateX(-50%); bottom: 0; width: 100%; max-width: 480px; z-index: 50; }
+  image-slot { display: block; }
+</style>
+<script src="./image-slot.js"></script>
+</helmet>
+
+<div class="app">
+
+  <!-- ===== HERO ===== -->
+  <div style="position:relative; overflow:hidden;">
+    <div style="position:absolute; top:-90px; right:-70px; width:260px; height:260px; border-radius:58% 42% 47% 53% / 55% 44% 56% 45%; background:#EBD3C2;"></div>
+    <div style="position:absolute; top:120px; left:-80px; width:150px; height:150px; border-radius:50% 50% 45% 55% / 55% 50% 50% 45%; background:#E4E1CE;"></div>
+
+    <div style="position:relative; display:flex; align-items:center; justify-content:space-between; padding:26px 26px 6px;">
+      <div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:20px; color:#3B2F28;">MindTalk<span style="color:#C0765A;">.</span></div>
+      <div style="display:inline-flex; align-items:center; gap:7px; background:#fff; padding:8px 13px; border-radius:30px; box-shadow:0 4px 12px -6px rgba(60,40,30,.3);"><span style="width:7px; height:7px; border-radius:50%; background:#9BB08A;"></span><span style="font-size:12px; font-weight:600; color:#6b5a4e;">Aarushi</span></div>
+    </div>
+
+    <div style="position:relative; padding:22px 28px 0;">
+      <div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:600; font-size:14px; letter-spacing:.01em; color:#C0765A; margin-bottom:10px;">You don't have to carry it alone.</div>
+      <h1 style="margin:0; font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:35px; line-height:1.1; letter-spacing:-.02em; color:#3B2F28; text-wrap:balance;">Feeling anxious, low, or stretched thin?</h1>
+      <p style="margin:16px 0 0; font-size:16.5px; line-height:1.55; color:#6b5a4e;">Gentle, professional therapy for anxiety, stress &amp; relationships &mdash; in central Delhi &amp; online, at your pace.</p>
+    </div>
+
+    <div style="position:relative; padding:24px 28px 0; display:flex; justify-content:center;">
+      <div style="position:relative;">
+        <div style="width:300px; height:300px; border-radius:47% 53% 54% 46% / 52% 45% 55% 48%; overflow:hidden; background:#E7C9B6; box-shadow:0 24px 50px -22px rgba(120,70,50,.55);">
+          <image-slot id="hero-photo" shape="rect" fit="cover" placeholder="Drop Aarushi's headshot" style="width:100%; height:100%;"></image-slot>
+        </div>
+        <div style="position:absolute; bottom:2px; right:30px; width:46px; height:46px; border-radius:50% 50% 46% 54% / 55% 46% 54% 45%; background:#9BB08A;"></div>
+        <div style="position:absolute; top:16px; left:-6px; width:26px; height:26px; border-radius:52% 48% 50% 50%; background:#EBD3C2;"></div>
+      </div>
+    </div>
+
+    <div style="position:relative; padding:22px 24px 0; display:flex; flex-wrap:wrap; gap:8px; justify-content:center;">
+      <span style="font-size:12.5px; font-weight:600; color:#6b5a4e; background:#fff; padding:8px 14px; border-radius:20px;">Counselling Psychologist</span>
+      <span style="font-size:12.5px; font-weight:600; color:#6b5a4e; background:#fff; padding:8px 14px; border-radius:20px;">Hypnotherapist</span>
+      <span style="font-size:12.5px; font-weight:600; color:#6b5a4e; background:#fff; padding:8px 14px; border-radius:20px;">&#9733; 4.9 &middot; 8+ yrs</span>
+    </div>
+  </div>
+
+  <!-- ===== IS THIS YOU ===== -->
+  <div style="padding:44px 26px 8px;">
+    <div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:26px; line-height:1.15; color:#3B2F28;">Does any of this feel familiar?</div>
+    <p style="margin:8px 0 22px; font-size:15px; line-height:1.5; color:#6b5a4e;">Start wherever you are &mdash; you don't need the right words to begin.</p>
+    <div style="display:flex; flex-wrap:wrap; gap:11px;">
+      <div style="flex:1 1 45%; background:#fff; border-radius:22px; padding:18px;"><div style="width:32px; height:32px; border-radius:50% 50% 46% 54%; background:#EBD3C2; margin-bottom:12px;"></div><div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:600; font-size:15px; color:#3B2F28;">Anxiety &amp; worry</div><div style="font-size:12.5px; color:#8a7767; margin-top:3px; line-height:1.4;">Racing thoughts, can't switch off.</div></div>
+      <div style="flex:1 1 45%; background:#fff; border-radius:22px; padding:18px;"><div style="width:32px; height:32px; border-radius:52% 48% 50% 50%; background:#E4E1CE; margin-bottom:12px;"></div><div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:600; font-size:15px; color:#3B2F28;">Low mood</div><div style="font-size:12.5px; color:#8a7767; margin-top:3px; line-height:1.4;">Heaviness, not feeling yourself.</div></div>
+      <div style="flex:1 1 45%; background:#fff; border-radius:22px; padding:18px;"><div style="width:32px; height:32px; border-radius:48% 52% 55% 45%; background:#D9E0CE; margin-bottom:12px;"></div><div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:600; font-size:15px; color:#3B2F28;">Relationships</div><div style="font-size:12.5px; color:#8a7767; margin-top:3px; line-height:1.4;">Conflict, loneliness, old patterns.</div></div>
+      <div style="flex:1 1 45%; background:#fff; border-radius:22px; padding:18px;"><div style="width:32px; height:32px; border-radius:54% 46% 48% 52%; background:#EBD3C2; margin-bottom:12px;"></div><div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:600; font-size:15px; color:#3B2F28;">Stress &amp; burnout</div><div style="font-size:12.5px; color:#8a7767; margin-top:3px; line-height:1.4;">Overstretched, running on empty.</div></div>
+      <div style="flex:1 1 100%; background:#fff; border-radius:22px; padding:18px; display:flex; align-items:center; gap:14px;"><div style="flex:none; width:32px; height:32px; border-radius:50% 50% 45% 55%; background:#E4E1CE;"></div><div><div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:600; font-size:15px; color:#3B2F28;">Trauma &amp; difficult experiences</div><div style="font-size:12.5px; color:#8a7767; margin-top:3px; line-height:1.4;">Gentle, paced support &mdash; no need to relive it all.</div></div></div>
+    </div>
+  </div>
+
+  <!-- ===== ABOUT ===== -->
+  <div style="position:relative; overflow:hidden; margin-top:38px; padding:40px 28px; background:#EFE3D6;">
+    <div style="position:absolute; bottom:-50px; left:-50px; width:150px; height:150px; border-radius:55% 45% 50% 50%; background:#E7D3C2;"></div>
+    <div style="position:relative;">
+      <div style="display:flex; gap:16px; align-items:center;">
+        <div style="flex:none; width:96px; height:96px; border-radius:52% 48% 47% 53% / 50% 52% 48% 50%; overflow:hidden; background:#E7C9B6;">
+          <image-slot id="about-photo" shape="rect" fit="cover" placeholder="Photo" style="width:100%; height:100%;"></image-slot>
+        </div>
+        <div><div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:21px; color:#3B2F28;">Aarushi Sabharwal</div><div style="font-size:12.5px; color:#7a695b; line-height:1.45; margin-top:3px;">Counselling Psychologist, Hypnotherapist &amp; Expressive Arts Therapist</div></div>
+      </div>
+      <p style="margin:20px 0 0; font-size:16.5px; line-height:1.55; color:#5a4c40;">I offer a warm, steady place to be heard &mdash; and gentle, practical ways forward. No judgement, no rush. Just you, supported.</p>
+      <a href="#" style="display:inline-block; margin-top:16px; font-family:'Bricolage Grotesque',sans-serif; font-weight:600; font-size:14px; color:#C0765A;">More about my approach &rarr;</a>
+    </div>
+  </div>
+
+  <!-- ===== HOW IT WORKS ===== -->
+  <div style="padding:44px 26px 8px;">
+    <div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:26px; color:#3B2F28; margin-bottom:22px;">Getting started is easy</div>
+    <div style="display:flex; flex-direction:column; gap:14px;">
+      <div style="display:flex; gap:15px; align-items:flex-start; background:#fff; border-radius:22px; padding:18px 20px;"><div style="flex:none; width:38px; height:38px; border-radius:50% 50% 46% 54%; background:#C0765A; color:#fff; display:flex; align-items:center; justify-content:center; font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:16px;">1</div><div><div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:600; font-size:16px; color:#3B2F28;">Say hello</div><div style="font-size:14px; color:#6b5a4e; line-height:1.5; margin-top:2px;">Message on WhatsApp or call &mdash; a short, no-pressure chat to see if we're a fit.</div><a href="https://wa.me/919000000000" style="display:inline-flex; align-items:center; gap:8px; margin-top:12px; height:40px; padding:0 18px; border-radius:22px; background:#C0765A; color:#fff; font-family:'Bricolage Grotesque',sans-serif; font-weight:600; font-size:14px; box-shadow:0 8px 18px -9px rgba(192,118,90,.8);"><span style="width:8px; height:8px; border-radius:50%; background:#f0cfbf;"></span>Message on WhatsApp</a></div></div>
+      <div style="display:flex; gap:15px; align-items:flex-start; background:#fff; border-radius:22px; padding:18px 20px;"><div style="flex:none; width:38px; height:38px; border-radius:48% 52% 52% 48%; background:#C0765A; color:#fff; display:flex; align-items:center; justify-content:center; font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:16px;">2</div><div><div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:600; font-size:16px; color:#3B2F28;">First session</div><div style="font-size:14px; color:#6b5a4e; line-height:1.5; margin-top:2px;">We talk through what's going on. Nothing is rushed &mdash; you share only what you're ready to.</div></div></div>
+      <div style="display:flex; gap:15px; align-items:flex-start; background:#fff; border-radius:22px; padding:18px 20px;"><div style="flex:none; width:38px; height:38px; border-radius:52% 48% 48% 52%; background:#C0765A; color:#fff; display:flex; align-items:center; justify-content:center; font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:16px;">3</div><div><div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:600; font-size:16px; color:#3B2F28;">A way forward</div><div style="font-size:14px; color:#6b5a4e; line-height:1.5; margin-top:2px;">Together we shape a plan around you &mdash; in-person, online, or a mix.</div></div></div>
+    </div>
+  </div>
+
+  <!-- ===== FEES ===== -->
+  <div style="padding:44px 26px 8px;">
+    <div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:26px; color:#3B2F28; margin-bottom:6px;">Simple, transparent fees</div>
+    <p style="margin:0 0 18px; font-size:14.5px; color:#6b5a4e; line-height:1.5;">50-minute sessions. No hidden costs.</p>
+    <div style="display:flex; gap:12px;">
+      <div style="flex:1; background:#fff; border-radius:22px; padding:22px 20px;"><div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:15px; color:#3B2F28;">In-person</div><div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:26px; color:#C0765A; margin:8px 0 3px;">&#8377;1,500</div><div style="font-size:12px; color:#8a7767; line-height:1.4;">Gole Market, New Delhi</div></div>
+      <div style="flex:1; background:#fff; border-radius:22px; padding:22px 20px;"><div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:15px; color:#3B2F28;">Online</div><div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:26px; color:#C0765A; margin:8px 0 3px;">&#8377;1,200</div><div style="font-size:12px; color:#8a7767; line-height:1.4;">Video, anywhere in India</div></div>
+    </div>
+  </div>
+
+  <!-- ===== EXPERIENCES ===== -->
+  <div style="margin-top:38px; padding:44px 26px; background:#EFE3D6;">
+    <div style="display:flex; align-items:center; gap:11px; margin-bottom:18px;"><span style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:28px; color:#3B2F28;">&#9733; 4.9</span><span style="font-size:13px; color:#7a695b;">from 120+ clients</span></div>
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <div style="background:#fff; border-radius:22px; padding:22px;"><p style="margin:0; font-size:16px; line-height:1.55; color:#5a4c40;">&ldquo;I was so nervous to start. Aarushi made it feel safe from minute one. I finally feel like myself again.&rdquo;</p><div style="font-size:12px; color:#a08e7e; margin-top:12px;">&mdash; Client, Delhi &middot; shared with permission</div></div>
+      <div style="background:#fff; border-radius:22px; padding:22px;"><p style="margin:0; font-size:16px; line-height:1.55; color:#5a4c40;">&ldquo;Warm, patient and genuinely kind. I never once felt judged.&rdquo;</p><div style="font-size:12px; color:#a08e7e; margin-top:12px;">&mdash; Client, online &middot; shared with permission</div></div>
+    </div>
+  </div>
+
+  <!-- ===== CTA BLOCK ===== -->
+  <div style="padding:48px 28px 44px; text-align:center;">
+    <div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:27px; line-height:1.15; color:#3B2F28; text-wrap:balance;">Whenever you're ready, I'm here.</div>
+    <p style="margin:12px auto 0; max-width:300px; font-size:15px; line-height:1.55; color:#6b5a4e;">Reaching out is the hardest step. A first message can be as simple as &ldquo;hi&rdquo;.</p>
+    <a href="https://wa.me/919000000000" style="display:inline-flex; align-items:center; justify-content:center; gap:9px; margin:22px auto 0; height:56px; padding:0 34px; border-radius:28px; background:#C0765A; color:#fff; font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:16px; box-shadow:0 12px 26px -10px rgba(192,118,90,.85);"><span style="width:9px; height:9px; border-radius:50%; background:#f0cfbf;"></span>Book on WhatsApp</a>
+  </div>
+
+  <!-- ===== CRISIS + FOOTER ===== -->
+  <div style="padding:26px 28px 32px; background:#3B2F28; color:#e6d7c9;">
+    <div style="font-size:13px; line-height:1.55;"><span style="font-weight:700; color:#F5EDE6;">In crisis right now?</span> If you're in immediate danger, please call the iCall helpline at 9152987821 or reach emergency services. This site isn't for emergencies.</div>
+    <div style="height:1px; background:rgba(255,255,255,.12); margin:24px 0;"></div>
+    <div style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:19px; color:#F5EDE6;">MindTalk<span style="color:#C0765A;">.</span> <span style="font-weight:500; font-size:14px; color:#a5917f;">with Aarushi</span></div>
+    <div style="font-size:13px; color:#a5917f; margin-top:8px; line-height:1.6;">Gole Market, New Delhi &middot; In-person &amp; online<br>WhatsApp &middot; Call &middot; Email</div>
+  </div>
+
+  <!-- ===== STICKY CTA BAR ===== -->
+  <div class="ctabar" style="padding:12px 16px 18px; background:linear-gradient(180deg, rgba(244,234,225,0) 0%, #F4EAE1 30%); display:flex; gap:10px;">
+    <a href="https://wa.me/919000000000" style="flex:1; display:flex; align-items:center; justify-content:center; gap:9px; height:56px; border-radius:28px; background:#C0765A; color:#fff; font-weight:700; font-size:15.5px; box-shadow:0 12px 26px -10px rgba(192,118,90,.85);"><span style="width:9px; height:9px; border-radius:50%; background:#f0cfbf;"></span>Book on WhatsApp</a>
+    <a href="tel:+919000000000" style="width:100px; display:flex; align-items:center; justify-content:center; height:56px; border-radius:28px; background:#fff; color:#6b5a4e; font-weight:700; font-size:15.5px; box-shadow:0 8px 20px -10px rgba(60,40,30,.4);">Call</a>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>
