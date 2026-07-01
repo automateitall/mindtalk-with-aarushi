@@ -1,0 +1,21 @@
+---
+import { site } from "../config/site";
+
+interface Props {
+  display?: string;
+  class?: string;
+}
+
+const { display = "inline-flex", class: className = "" } = Astro.props;
+---
+
+<div
+  class:list={[
+    display,
+    "items-center gap-2 rounded-full bg-white px-4 py-2.5 shadow-[0_12px_26px_-12px_rgba(60,40,30,0.4)]",
+    className,
+  ]}
+>
+  <span class="h-[9px] w-[9px] rounded-full bg-sage"></span>
+  <span class="text-[13.5px] font-semibold text-[#4a4236]">{site.availability}</span>
+</div>

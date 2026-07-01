@@ -9,8 +9,10 @@ interface Props {
 const { label, price, note, class: className = "" } = Astro.props;
 ---
 
-<div class:list={["flex-1 rounded-[22px] bg-white px-5 py-[22px]", className]}>
-  <div class="font-display text-[15px] font-bold text-ink">{label}</div>
-  <div class="my-2 font-display text-[26px] font-extrabold text-terracotta">{price}</div>
-  <div class="text-xs leading-[1.4] text-ink-muted">{note}</div>
+<div class:list={["flex-1 rounded-[22px] bg-white px-5 py-[22px] md:rounded-[24px] md:p-7", className]}>
+  <div class="font-display text-[15px] font-bold text-ink md:text-base lg:text-[17px]">{label}</div>
+  <div class="my-2 font-display text-[26px] font-extrabold text-terracotta md:text-[32px] lg:my-2.5 lg:text-[34px]">
+    {price}
+  </div>
+  <div class="text-xs leading-[1.4] text-ink-muted md:text-[13px] md:leading-[1.45] lg:text-[13.5px]">{note}</div>
 </div>

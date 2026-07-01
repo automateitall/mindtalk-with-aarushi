@@ -46,6 +46,30 @@
   }
 }
 
+@layer components {
+  /* Shared horizontal container, one tier per source design: narrow
+     mobile "app" column below md, the tablet design's 834px card from md
+     to lg, the desktop design's 1160px content width at lg and up. */
+  .wrap {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 480px;
+    padding-inline: 28px;
+  }
+  @media (width >= 48rem) {
+    .wrap {
+      max-width: 834px;
+      padding-inline: 44px;
+    }
+  }
+  @media (width >= 64rem) {
+    .wrap {
+      max-width: 1160px;
+      padding-inline: 48px;
+    }
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;

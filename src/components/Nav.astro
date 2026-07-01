@@ -1,0 +1,34 @@
+---
+import WhatsAppCTA from "./WhatsAppCTA.astro";
+import CallCTA from "./CallCTA.astro";
+import { site } from "../config/site";
+
+// Tablet's nav omits "How I help" and the standalone Call link — both are
+// desktop-only additions (site.navLinks[0] is "How I help").
+const [concernsLink, ...tabletLinks] = site.navLinks;
+---
+
+<div class="sticky top-0 z-50 hidden border-b border-[rgba(160,120,90,0.14)] bg-[rgba(244,234,225,0.88)] backdrop-blur-md md:block">
+  <div class="wrap flex h-[72px] items-center justify-between lg:h-[76px]">
+    <a href="/" class="font-display text-[21px] font-extrabold text-ink lg:text-[22px]">
+      MindTalk<span class="text-terracotta">.</span>
+      <span class="ml-1 text-sm font-medium text-ink-faint-2 lg:text-[15px]">with Aarushi</span>
+    </a>
+    <div class="flex items-center gap-[22px] lg:gap-[34px]">
+      <a href={concernsLink.href} class="hidden text-[14.5px] font-medium text-ink-soft lg:inline">
+        {concernsLink.label}
+      </a>
+      {
+        tabletLinks.map((link) => (
+          <a href={link.href} class="text-[14px] font-medium text-ink-soft lg:text-[14.5px]">
+            {link.label}
+          </a>
+        ))
+      }
+      <span class="hidden lg:inline-flex">
+        <CallCTA variant="text" class="text-[14.5px] font-semibold">Call</CallCTA>
+      </span>
+      <WhatsAppCTA size="md">Book on WhatsApp</WhatsAppCTA>
+    </div>
+  </div>
+</div>

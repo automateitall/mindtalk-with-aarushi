@@ -8,11 +8,34 @@ prototypes this build implements live in `design/` for reference.
 
 ## Status
 
-**Home page only**, implemented from `design/project/MindTalk Homepage.dc.html`
-(the "2b — Warm Organic" direction locked in during design review). The
-rest of the sitemap (About, Services, specialty pages, How I Work, Fees,
-FAQ, Blog, Contact/Book, Privacy Policy) is planned per the Website Plan
-and Build Spec docs but not yet built.
+**Home page only**, responsive across three tiers. Implemented from three
+Claude Design exports:
+
+- `design/project/MindTalk Homepage.dc.html` — mobile ("2b — Warm Organic",
+  locked in during design review)
+- `design/project-tablet/MindTalk Homepage Tablet.html` — tablet
+- `design/project-desktop/MindTalk Homepage Desktop.html` — desktop
+
+Breakpoints match what each source design actually targets, not generic
+Tailwind defaults: below `md` (768px) is the mobile design; `md` to `lg`
+(768–1024px) is the tablet design (an 834px shadowed card, its own sticky
+nav without the "How I help" link or standalone Call link); `lg` and up
+(1024px+) is the desktop design (full-bleed, 1160px content width, full
+nav). Mobile keeps its own hero header + sticky bottom WhatsApp/Call bar
+rather than adopting a nav — tablet and desktop both get `Nav.astro`
+instead, which is why the sticky bar and mobile header both switch off at
+`md`, not `lg`.
+
+The three designs had some real content differences between them (desktop
+added a 3rd hero trust badge, an availability badge, a 6th "Something
+else?" concern card, a 2nd About paragraph, a 3rd testimonial; tablet
+omitted the availability badge entirely). Per-item, the richer version was
+used across **all three** tiers — see `src/config/site.ts` for the
+unified content.
+
+The rest of the sitemap (About, Services, specialty pages, How I Work,
+Fees, FAQ, Blog, Contact/Book, Privacy Policy) is planned per the Website
+Plan and Build Spec docs but not yet built.
 
 ## Running locally
 
@@ -38,12 +61,16 @@ src/
 ├── assets/images/    real photos (hero + about) extracted from the design tool
 ├── components/       Button, WhatsAppCTA, CallCTA, TrustStrip, ConcernCard,
 │                      StepItem, FeeCard, TestimonialCard, CrisisNote,
-│                      Section, Header, Footer, StickyCtaBar
-├── config/site.ts     contact numbers, NAP, fees, crisis line, rating —
-│                      single source of truth, referenced by components
-├── layouts/Layout.astro  page chrome: meta tags, footer, sticky CTA bar
+│                      AvailabilityBadge, Section, Header (mobile), Nav
+│                      (desktop), Footer, StickyCtaBar (mobile)
+├── config/site.ts     contact numbers, NAP, fees, crisis line, rating,
+│                      concerns/testimonials data — single source of truth
+├── layouts/Layout.astro  page chrome: meta tags, nav, footer, sticky CTA bar
 ├── pages/index.astro  the Home page
-└── styles/global.css  design tokens (color/font) as Tailwind v4 @theme
+└── styles/global.css  design tokens + the `.wrap` container (three tiers:
+                       480px mobile column below `md`, the tablet design's
+                       834px card from `md` to `lg`, the desktop design's
+                       1160px content width at `lg` and up)
 ```
 
 ## Pending inputs (do not guess these)

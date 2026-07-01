@@ -10,16 +10,23 @@ interface Props {
 const { number, title, description, radius = "50% 50% 46% 54%", class: className = "" } = Astro.props;
 ---
 
-<div class:list={["flex items-start gap-[15px] rounded-[22px] bg-white px-5 py-[18px]", className]}>
+<div
+  class:list={[
+    "flex items-start gap-[15px] rounded-[22px] bg-white px-5 py-[18px] md:flex-col md:gap-0 md:rounded-[24px] md:p-[26px] lg:p-[30px]",
+    className,
+  ]}
+>
   <div
-    class="flex h-[38px] w-[38px] flex-none items-center justify-center font-display text-base font-bold text-white"
+    class="flex h-[38px] w-[38px] flex-none items-center justify-center font-display text-base font-bold text-white md:mb-4 md:h-11 md:w-11 md:text-lg lg:mb-[18px] lg:h-12 lg:w-12 lg:text-xl"
     style={{ background: "var(--color-terracotta)", borderRadius: radius }}
   >
     {number}
   </div>
   <div>
-    <div class="font-display text-base font-semibold text-ink">{title}</div>
-    <div class="mt-0.5 text-sm leading-[1.5] text-ink-soft">{description}</div>
+    <div class="font-display text-base font-semibold text-ink md:text-[17px] lg:text-[19px]">{title}</div>
+    <div class="mt-0.5 text-sm leading-[1.5] text-ink-soft md:mt-[5px] md:leading-[1.55] lg:mt-[6px] lg:text-[15px]">
+      {description}
+    </div>
     <slot />
   </div>
 </div>

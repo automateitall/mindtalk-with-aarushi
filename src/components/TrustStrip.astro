@@ -3,21 +3,26 @@ import { site } from "../config/site";
 
 interface Props {
   items?: string[];
+  align?: "center" | "start";
+  display?: string;
   class?: string;
 }
 
-const defaultItems = [
-  ...site.roleBadges,
-  `★ ${site.rating.value} · 8+ yrs`,
-];
+const defaultItems = [...site.roleBadges, `★ ${site.rating.value} · 8+ yrs`];
 
-const { items = defaultItems, class: className = "" } = Astro.props;
+const {
+  items = defaultItems,
+  align = "center",
+  display = "flex",
+  class: className = "",
+} = Astro.props;
+const justify = align === "start" ? "justify-start" : "justify-center";
 ---
 
-<div class:list={["flex flex-wrap justify-center gap-2", className]}>
+<div class:list={[display, "flex-wrap gap-2 md:gap-2.5", justify, className]}>
   {
     items.map((label) => (
-      <span class="rounded-full bg-white px-3.5 py-2 text-[12.5px] font-semibold text-ink-soft">
+      <span class="rounded-full bg-white px-3.5 py-2 text-[12.5px] font-semibold text-ink-soft md:px-[15px] md:py-[9px] md:text-[13px]">
         {label}
       </span>
     ))

@@ -3,18 +3,22 @@
 // Pass a `decor` slot for absolutely-positioned organic blobs — the wrapper
 // switches to `relative overflow-hidden` automatically when it's used.
 interface Props {
+  id?: string;
   background?: "default" | "alt";
   class?: string;
   innerClass?: string;
 }
 
-const { background = "default", class: className = "", innerClass = "" } = Astro.props;
+const { id, background = "default", class: className = "", innerClass = "" } = Astro.props;
 const hasDecor = Astro.slots.has("decor");
 
 const bg = background === "alt" ? "bg-cream-alt" : "";
+// Sticky desktop nav is 76px tall — offset anchor scrolling so section
+// headings don't land underneath it. No-op below lg (nav isn't rendered).
+const scrollOffset = id ? "lg:scroll-mt-[76px]" : "";
 ---
 
-<section class:list={[bg, hasDecor && "relative overflow-hidden", className]}>
+<section id={id} class:list={[bg, scrollOffset, hasDecor && "relative overflow-hidden", className]}>
   {hasDecor && <slot name="decor" />}
   <div class:list={[hasDecor && "relative", innerClass]}>
     <slot />
