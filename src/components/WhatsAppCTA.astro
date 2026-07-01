@@ -1,0 +1,18 @@
+---
+import Button from "./Button.astro";
+import { waLink } from "../config/site";
+
+interface Props {
+  message?: string;
+  variant?: "primary" | "secondary";
+  size?: "md" | "lg";
+  full?: boolean;
+  class?: string;
+}
+
+const { message, variant = "primary", size = "md", full = false, class: className = "" } = Astro.props;
+---
+
+<Button href={waLink(message)} variant={variant} size={size} full={full} dot class={className}>
+  <slot>Book on WhatsApp</slot>
+</Button>

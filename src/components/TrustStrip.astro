@@ -1,0 +1,25 @@
+---
+import { site } from "../config/site";
+
+interface Props {
+  items?: string[];
+  class?: string;
+}
+
+const defaultItems = [
+  ...site.roleBadges,
+  `★ ${site.rating.value} · 8+ yrs`,
+];
+
+const { items = defaultItems, class: className = "" } = Astro.props;
+---
+
+<div class:list={["flex flex-wrap justify-center gap-2", className]}>
+  {
+    items.map((label) => (
+      <span class="rounded-full bg-white px-3.5 py-2 text-[12.5px] font-semibold text-ink-soft">
+        {label}
+      </span>
+    ))
+  }
+</div>

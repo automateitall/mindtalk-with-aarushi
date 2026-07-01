@@ -1,0 +1,224 @@
+---
+import { Image } from "astro:assets";
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import TrustStrip from "../components/TrustStrip.astro";
+import ConcernCard from "../components/ConcernCard.astro";
+import Section from "../components/Section.astro";
+import StepItem from "../components/StepItem.astro";
+import FeeCard from "../components/FeeCard.astro";
+import TestimonialCard from "../components/TestimonialCard.astro";
+import WhatsAppCTA from "../components/WhatsAppCTA.astro";
+import { site } from "../config/site";
+import heroPhoto from "../assets/images/aarushi-hero.webp";
+import aboutPhoto from "../assets/images/aarushi-about.webp";
+
+const title = `${site.name} — Therapy for anxiety, stress & relationships in Gole Market, Delhi & online`;
+const description =
+  "Gentle, professional therapy with Aarushi Sabharwal — Counselling Psychologist, Hypnotherapist & Expressive Arts Therapist. In-person in Gole Market, New Delhi, and online. Book on WhatsApp.";
+
+// Sample copy only — do not treat as real client testimonials.
+// Build Spec §5: individual testimonials stay unpublished until Aarushi
+// confirms permissibility with her professional body.
+const testimonials = [
+  {
+    quote:
+      "I was so nervous to start. Aarushi made it feel safe from minute one. I finally feel like myself again.",
+    attribution: "— Client, Delhi · shared with permission",
+  },
+  {
+    quote: "Warm, patient and genuinely kind. I never once felt judged.",
+    attribution: "— Client, online · shared with permission",
+  },
+];
+---
+
+<Layout title={title} description={description}>
+  <!-- ===== HERO ===== -->
+  <div class="relative overflow-hidden">
+    <div
+      class="absolute -right-[70px] -top-[90px] h-[260px] w-[260px] rounded-[58%_42%_47%_53%/55%_44%_56%_45%] bg-clay-100"
+    >
+    </div>
+    <div
+      class="absolute -left-20 top-[120px] h-[150px] w-[150px] rounded-[50%_50%_45%_55%/55%_50%_50%_45%] bg-sage-50"
+    >
+    </div>
+
+    <Header />
+
+    <div class="relative px-7 pt-[22px]">
+      <div class="mb-2.5 font-display text-sm font-semibold tracking-[0.01em] text-terracotta">
+        You don't have to carry it alone.
+      </div>
+      <h1
+        class="m-0 text-balance font-display text-[35px] font-bold leading-[1.1] tracking-[-0.02em] text-ink"
+      >
+        Feeling anxious, low, or stretched thin?
+      </h1>
+      <p class="mt-4 text-[16.5px] leading-[1.55] text-ink-soft">
+        Gentle, professional therapy for anxiety, stress &amp; relationships &mdash; in central
+        Delhi &amp; online, at your pace.
+      </p>
+    </div>
+
+    <div class="relative flex justify-center px-7 pt-6">
+      <div class="relative">
+        <div
+          class="h-[300px] w-[300px] overflow-hidden rounded-[47%_53%_54%_46%/52%_45%_55%_48%] bg-clay-200 shadow-[0_24px_50px_-22px_rgba(120,70,50,0.55)]"
+        >
+          <Image
+            src={heroPhoto}
+            alt={`${site.practitioner}, ${site.roles[0]}`}
+            width={300}
+            height={300}
+            class="h-full w-full object-cover"
+          />
+        </div>
+        <div class="absolute bottom-0.5 right-[30px] h-[46px] w-[46px] rounded-[50%_50%_46%_54%/55%_46%_54%_45%] bg-sage">
+        </div>
+        <div class="absolute -left-1.5 top-4 h-[26px] w-[26px] rounded-[52%_48%_50%_50%] bg-clay-100">
+        </div>
+      </div>
+    </div>
+
+    <div class="relative px-6 pt-[22px]">
+      <TrustStrip />
+    </div>
+  </div>
+
+  <!-- ===== IS THIS YOU ===== -->
+  <Section innerClass="px-[26px] pb-2 pt-11">
+    <div class="font-display text-[26px] font-bold leading-[1.15] text-ink">
+      Does any of this feel familiar?
+    </div>
+    <p class="mb-[22px] mt-2 text-[15px] leading-[1.5] text-ink-soft">
+      Start wherever you are &mdash; you don't need the right words to begin.
+    </p>
+    <div class="flex flex-wrap gap-[11px]">
+      <ConcernCard
+        title="Anxiety & worry"
+        description="Racing thoughts, can't switch off."
+        color="var(--color-clay-100)"
+        radius="50% 50% 46% 54%"
+      />
+      <ConcernCard
+        title="Low mood"
+        description="Heaviness, not feeling yourself."
+        color="var(--color-sage-50)"
+        radius="52% 48% 50% 50%"
+      />
+      <ConcernCard
+        title="Relationships"
+        description="Conflict, loneliness, old patterns."
+        color="var(--color-sage-100)"
+        radius="48% 52% 55% 45%"
+      />
+      <ConcernCard
+        title="Stress & burnout"
+        description="Overstretched, running on empty."
+        color="var(--color-clay-100)"
+        radius="54% 46% 48% 52%"
+      />
+      <ConcernCard
+        wide
+        title="Trauma & difficult experiences"
+        description="Gentle, paced support — no need to relive it all."
+        color="var(--color-sage-50)"
+        radius="50% 50% 45% 55%"
+      />
+    </div>
+  </Section>
+
+  <!-- ===== ABOUT ===== -->
+  <Section background="alt" class="mt-[38px] py-10" innerClass="px-7">
+    <div slot="decor" class="absolute -bottom-[50px] -left-[50px] h-[150px] w-[150px] rounded-[55%_45%_50%_50%] bg-clay-300">
+    </div>
+
+    <div class="flex items-center gap-4">
+      <div class="h-24 w-24 flex-none overflow-hidden rounded-[52%_48%_47%_53%/50%_52%_48%_50%] bg-clay-200">
+        <Image
+          src={aboutPhoto}
+          alt={site.practitioner}
+          width={96}
+          height={96}
+          class="h-full w-full object-cover"
+        />
+      </div>
+      <div>
+        <div class="font-display text-[21px] font-bold text-ink">{site.practitioner}</div>
+        <div class="mt-[3px] text-[12.5px] leading-[1.45] text-ink-softer">
+          Counselling Psychologist, Hypnotherapist &amp; Expressive Arts Therapist
+        </div>
+      </div>
+    </div>
+    <p class="mt-5 text-[16.5px] leading-[1.55] text-[#5a4c40]">
+      I offer a warm, steady place to be heard &mdash; and gentle, practical ways forward. No
+      judgement, no rush. Just you, supported.
+    </p>
+    <a href="/about" class="mt-4 inline-block font-display text-sm font-semibold text-terracotta">
+      More about my approach &rarr;
+    </a>
+  </Section>
+
+  <!-- ===== HOW IT WORKS ===== -->
+  <Section innerClass="px-[26px] pb-2 pt-11">
+    <div class="mb-[22px] font-display text-[26px] font-bold text-ink">Getting started is easy</div>
+    <div class="flex flex-col gap-3.5">
+      <StepItem
+        number={1}
+        title="Say hello"
+        description="Message on WhatsApp or call — a short, no-pressure chat to see if we're a fit."
+        radius="50% 50% 46% 54%"
+      >
+        <WhatsAppCTA class="mt-3">Message on WhatsApp</WhatsAppCTA>
+      </StepItem>
+      <StepItem
+        number={2}
+        title="First session"
+        description="We talk through what's going on. Nothing is rushed — you share only what you're ready to."
+        radius="48% 52% 52% 48%"
+      />
+      <StepItem
+        number={3}
+        title="A way forward"
+        description="Together we shape a plan around you — in-person, online, or a mix."
+        radius="52% 48% 48% 52%"
+      />
+    </div>
+  </Section>
+
+  <!-- ===== FEES ===== -->
+  <Section innerClass="px-[26px] pb-2 pt-11">
+    <div class="mb-1.5 font-display text-[26px] font-bold text-ink">Simple, transparent fees</div>
+    <p class="mb-[18px] text-[14.5px] leading-[1.5] text-ink-soft">
+      50-minute sessions. No hidden costs.
+    </p>
+    <div class="flex gap-3">
+      <FeeCard label={site.fees.inPerson.label} price={site.fees.inPerson.price} note={site.fees.inPerson.note} />
+      <FeeCard label={site.fees.online.label} price={site.fees.online.price} note={site.fees.online.note} />
+    </div>
+  </Section>
+
+  <!-- ===== CLIENT EXPERIENCES ===== -->
+  <Section background="alt" class="mt-[38px]" innerClass="px-[26px] py-11">
+    <div class="mb-[18px] flex items-center gap-[11px]">
+      <span class="font-display text-[28px] font-extrabold text-ink">★ {site.rating.value}</span>
+      <span class="text-[13px] text-ink-softer">from {site.rating.reviewCount} clients</span>
+    </div>
+    <div class="flex flex-col gap-3">
+      {testimonials.map((t) => <TestimonialCard quote={t.quote} attribution={t.attribution} />)}
+    </div>
+  </Section>
+
+  <!-- ===== CLOSING CTA ===== -->
+  <div class="px-7 pb-11 pt-12 text-center">
+    <div class="text-balance font-display text-[27px] font-bold leading-[1.15] text-ink">
+      Whenever you're ready, I'm here.
+    </div>
+    <p class="mx-auto mt-3 max-w-[300px] text-[15px] leading-[1.55] text-ink-soft">
+      Reaching out is the hardest step. A first message can be as simple as &ldquo;hi&rdquo;.
+    </p>
+    <WhatsAppCTA size="lg" class="mx-auto mt-[22px]">Book on WhatsApp</WhatsAppCTA>
+  </div>
+</Layout>

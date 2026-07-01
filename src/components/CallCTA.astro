@@ -1,0 +1,17 @@
+---
+import Button from "./Button.astro";
+import { telLink } from "../config/site";
+
+interface Props {
+  variant?: "primary" | "secondary";
+  size?: "md" | "lg";
+  full?: boolean;
+  class?: string;
+}
+
+const { variant = "secondary", size = "md", full = false, class: className = "" } = Astro.props;
+---
+
+<Button href={telLink()} variant={variant} size={size} full={full} class={className}>
+  <slot>Call</slot>
+</Button>

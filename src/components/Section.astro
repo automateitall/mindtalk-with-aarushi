@@ -1,0 +1,22 @@
+---
+// Consistent vertical rhythm + background wrapper for homepage sections.
+// Pass a `decor` slot for absolutely-positioned organic blobs — the wrapper
+// switches to `relative overflow-hidden` automatically when it's used.
+interface Props {
+  background?: "default" | "alt";
+  class?: string;
+  innerClass?: string;
+}
+
+const { background = "default", class: className = "", innerClass = "" } = Astro.props;
+const hasDecor = Astro.slots.has("decor");
+
+const bg = background === "alt" ? "bg-cream-alt" : "";
+---
+
+<section class:list={[bg, hasDecor && "relative overflow-hidden", className]}>
+  {hasDecor && <slot name="decor" />}
+  <div class:list={[hasDecor && "relative", innerClass]}>
+    <slot />
+  </div>
+</section>

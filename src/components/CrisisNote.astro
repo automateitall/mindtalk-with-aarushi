@@ -1,0 +1,24 @@
+---
+import { site } from "../config/site";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+const { teleManas, vandrevala, emergency } = site.crisis;
+---
+
+<div class:list={["text-[13px] leading-[1.6] text-footer-text", className]}>
+  <p class="m-0 font-semibold text-cream-deep">In crisis or need urgent support?</p>
+  <p class="m-0 mt-1">This website isn't for emergencies.</p>
+  <p class="m-0 mt-2">
+    <span class="text-cream-deep">{teleManas.label}:</span> {teleManas.numbers.join(" or ")}
+  </p>
+  <p class="m-0 mt-1">
+    <span class="text-cream-deep">{vandrevala.label}:</span> {vandrevala.number}
+  </p>
+  <p class="m-0 mt-1">
+    <span class="text-cream-deep">{emergency.label}:</span> {emergency.number}
+  </p>
+</div>

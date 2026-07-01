@@ -1,0 +1,25 @@
+---
+interface Props {
+  number: number;
+  title: string;
+  description: string;
+  radius?: string;
+  class?: string;
+}
+
+const { number, title, description, radius = "50% 50% 46% 54%", class: className = "" } = Astro.props;
+---
+
+<div class:list={["flex items-start gap-[15px] rounded-[22px] bg-white px-5 py-[18px]", className]}>
+  <div
+    class="flex h-[38px] w-[38px] flex-none items-center justify-center font-display text-base font-bold text-white"
+    style={{ background: "var(--color-terracotta)", borderRadius: radius }}
+  >
+    {number}
+  </div>
+  <div>
+    <div class="font-display text-base font-semibold text-ink">{title}</div>
+    <div class="mt-0.5 text-sm leading-[1.5] text-ink-soft">{description}</div>
+    <slot />
+  </div>
+</div>

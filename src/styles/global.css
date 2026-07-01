@@ -1,0 +1,56 @@
+@import "tailwindcss";
+@import "@fontsource-variable/bricolage-grotesque";
+@import "@fontsource-variable/hanken-grotesk";
+
+@theme {
+  /* Design tokens — MindTalk with Aarushi (Design Brief §Colour direction) */
+  --color-sand: #e3d6ca;       /* outer/body background */
+  --color-cream: #f4eae1;      /* page background */
+  --color-cream-alt: #efe3d6;  /* alternating section background */
+  --color-cream-deep: #f5ede6; /* lightest text-on-dark */
+
+  --color-clay-100: #ebd3c2;   /* organic blobs, badges */
+  --color-clay-200: #e7c9b6;   /* photo slot background */
+  --color-clay-300: #e7d3c2;   /* organic blobs (about) */
+  --color-terracotta: #c0765a;      /* primary CTA / accent */
+  --color-terracotta-light: #f0cfbf; /* CTA dot */
+
+  --color-sage: #9bb08a;       /* accent dot, blobs */
+  --color-sage-100: #d9e0ce;   /* concern-card icon bg */
+  --color-sage-50: #e4e1cd;    /* concern-card icon bg / blob */
+
+  --color-ink: #3b2f28;        /* headings, footer bg */
+  --color-ink-soft: #6b5a4e;   /* body copy */
+  --color-ink-muted: #8a7767;  /* captions */
+  --color-ink-softer: #7a695b; /* small labels */
+  --color-ink-faint: #a08e7e;  /* attributions */
+  --color-ink-faint-2: #a5917f;/* footer secondary text */
+  --color-footer-text: #e6d7c9;
+
+  --font-display: "Bricolage Grotesque Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Hanken Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--color-sand);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

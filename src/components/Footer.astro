@@ -1,0 +1,19 @@
+---
+import { site } from "../config/site";
+import CrisisNote from "./CrisisNote.astro";
+---
+
+<footer class="bg-ink px-7 pb-8 pt-[26px] text-footer-text">
+  <CrisisNote />
+
+  <div class="my-6 h-px bg-white/10"></div>
+
+  <div class="font-display text-[19px] font-extrabold text-cream-deep">
+    MindTalk<span class="text-terracotta">.</span>
+    <span class="ml-1 text-sm font-medium text-ink-faint-2">with Aarushi</span>
+  </div>
+  <div class="mt-2 text-[13px] leading-[1.6] text-ink-faint-2">
+    {site.address.short} &middot; In-person &amp; online<br />
+    WhatsApp &middot; Call &middot; Email
+  </div>
+</footer>

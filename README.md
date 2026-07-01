@@ -1,25 +1,78 @@
-# CODING AGENTS: READ THIS FIRST
+# MindTalk with Aarushi
 
-This is a **handoff bundle** from Claude Design (claude.ai/design).
+Marketing site for MindTalk with Aarushi — a counselling practice in Gole
+Market, New Delhi. Astro + Tailwind CSS.
 
-A user mocked up designs in HTML/CSS/JS using an AI design tool, then exported this bundle so a coding agent can implement the designs for real.
+The original design brief, chat transcript, and Claude Design HTML
+prototypes this build implements live in `design/` for reference.
 
-## What you should do — IMPORTANT
+## Status
 
-**Read the chat transcripts first.** There are 1 chat transcript(s) in `chats/`. The transcripts show the full back-and-forth between the user and the design assistant — they tell you **what the user actually wants** and **where they landed** after iterating. Don't skip them. The final HTML files are the output, but the chat is where the intent lives.
+**Home page only**, implemented from `design/project/MindTalk Homepage.dc.html`
+(the "2b — Warm Organic" direction locked in during design review). The
+rest of the sitemap (About, Services, specialty pages, How I Work, Fees,
+FAQ, Blog, Contact/Book, Privacy Policy) is planned per the Website Plan
+and Build Spec docs but not yet built.
 
-**Read `project/MindTalk Homepage.dc.html` in full.** The user had this file open when they triggered the handoff, so it's almost certainly the primary design they want built. Read it top to bottom — don't skim. Then **follow its imports**: open every file it pulls in (shared components, CSS, scripts) so you understand how the pieces fit together before you start implementing.
+## Running locally
 
-**If anything is ambiguous, ask the user to confirm before you start implementing.** It's much cheaper to clarify scope up front than to build the wrong thing.
+```sh
+npm install
+npm run dev       # http://localhost:4321
+```
 
-## About the design files
+| Command           | Action                                    |
+| :----------------- | :----------------------------------------- |
+| `npm run dev`      | Start the dev server                       |
+| `npm run build`    | Production build to `./dist/`              |
+| `npm run preview`  | Preview the production build locally       |
+| `npx astro check`  | Type-check `.astro`/`.ts` files            |
 
-The design medium is **HTML/CSS/JS** — these are prototypes, not production code. Your job is to **recreate them pixel-perfectly** in whatever technology makes sense for the target codebase (React, Vue, native, whatever fits). Match the visual output; don't copy the prototype's internal structure unless it happens to fit.
+No environment variables are required yet — there's no serverless
+function, CMS, or payment integration wired up. See "Not yet built" below.
 
-**Don't render these files in a browser or take screenshots unless the user asks you to.** Everything you need — dimensions, colors, layout rules — is spelled out in the source. Read the HTML and CSS directly; a screenshot won't tell you anything they don't.
+## Project structure
 
-## Bundle contents
+```
+src/
+├── assets/images/    real photos (hero + about) extracted from the design tool
+├── components/       Button, WhatsAppCTA, CallCTA, TrustStrip, ConcernCard,
+│                      StepItem, FeeCard, TestimonialCard, CrisisNote,
+│                      Section, Header, Footer, StickyCtaBar
+├── config/site.ts     contact numbers, NAP, fees, crisis line, rating —
+│                      single source of truth, referenced by components
+├── layouts/Layout.astro  page chrome: meta tags, footer, sticky CTA bar
+├── pages/index.astro  the Home page
+└── styles/global.css  design tokens (color/font) as Tailwind v4 @theme
+```
 
-- `README.md` — this file
-- `chats/` — conversation transcripts (read these!)
-- `project/` — the `MindTalk with Aarushi design brief` project files (HTML prototypes, assets, components)
+## Pending inputs (do not guess these)
+
+Tracked in `src/config/site.ts` and inline comments:
+
+- **WhatsApp / call numbers** — currently a placeholder (`+91 90000 00000`).
+  Swap `whatsappNumber` / `callNumber` in `src/config/site.ts`.
+- **Credentials wording** — RCI registration number and degree institution
+  are not yet confirmed by Aarushi (Website Plan, "Still open" #1). The
+  hero/about copy only uses what's already confirmed (role titles,
+  CHI-USA, UNESCO-CIDS); don't add registration numbers or degrees without
+  her sign-off.
+- **Rating figure** — using 4.7★ per the Website Plan's locked homepage
+  copy; the earlier design mockup showed 4.9★. Confirm the real aggregate
+  rating before launch.
+- **Testimonials** — the two shown are placeholder/sample copy, not real
+  client quotes. Build Spec §5: individual testimonials stay unpublished
+  until Aarushi confirms permissibility with her professional body.
+- **Vandrevala Foundation crisis number** — marked "verify before
+  publishing" in the Build Spec; carried through as-is.
+
+## Not yet built
+
+Per the Build Spec's build order, still ahead: remaining launch-minimum
+pages (About, Services, How I Work, Fees, Contact/Book, Privacy Policy),
+specialty pages, enquiry form + serverless email (Resend), Tina CMS for
+blog + testimonials, paid booking flow (payment rail — Stripe vs Razorpay
+— still undecided), analytics, JSON-LD structured data, sitemap/robots,
+and Netlify deploy. None of these need guessing at; the three docs in
+`design/` (or wherever the Design Brief / Website Plan / Build Spec live)
+spell out the decisions already made and what's still open.

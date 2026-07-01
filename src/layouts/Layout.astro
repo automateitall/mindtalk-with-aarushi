@@ -1,0 +1,45 @@
+---
+import "../styles/global.css";
+import Footer from "../components/Footer.astro";
+import StickyCtaBar from "../components/StickyCtaBar.astro";
+import { site } from "../config/site";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f4eae1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={Astro.url} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body class="m-0">
+    <div class="relative mx-auto min-h-screen max-w-[480px] overflow-hidden bg-cream pb-24">
+      <main>
+        <slot />
+      </main>
+      <Footer />
+    </div>
+    <StickyCtaBar />
+  </body>
+</html>

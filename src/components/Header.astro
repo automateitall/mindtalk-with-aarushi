@@ -1,0 +1,13 @@
+---
+import { site } from "../config/site";
+---
+
+<div class="relative flex items-center justify-between px-[26px] pb-1.5 pt-[26px]">
+  <a href="/" class="font-display text-xl font-extrabold text-ink">
+    MindTalk<span class="text-terracotta">.</span>
+  </a>
+  <div class="inline-flex items-center gap-[7px] rounded-full bg-white px-[13px] py-2 shadow-[0_4px_12px_-6px_rgba(60,40,30,0.3)]">
+    <span class="h-[7px] w-[7px] rounded-full bg-sage"></span>
+    <span class="text-xs font-semibold text-ink-soft">{site.practitioner.split(" ")[0]}</span>
+  </div>
+</div>
