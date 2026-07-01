@@ -8,8 +8,13 @@ prototypes this build implements live in `design/` for reference.
 
 ## Status
 
-**Home page only**, responsive across three tiers. Implemented from three
-Claude Design exports:
+**Home, About, and three service pages** (Hypnotherapy, Counselling
+Psychology, Expressive Arts Therapy) on a reusable template, all
+responsive across three tiers (mobile / tablet / desktop). Home was
+implemented from three Claude Design exports; About and the service pages
+were built from written specs + copy (no Claude Design mockups), reusing
+the same components, tokens, and breakpoint system for visual
+consistency.
 
 - `design/project/MindTalk Homepage.dc.html` — mobile ("2b — Warm Organic",
   locked in during design review)
@@ -26,16 +31,71 @@ rather than adopting a nav — tablet and desktop both get `Nav.astro`
 instead, which is why the sticky bar and mobile header both switch off at
 `md`, not `lg`.
 
-The three designs had some real content differences between them (desktop
-added a 3rd hero trust badge, an availability badge, a 6th "Something
-else?" concern card, a 2nd About paragraph, a 3rd testimonial; tablet
-omitted the availability badge entirely). Per-item, the richer version was
-used across **all three** tiers — see `src/config/site.ts` for the
-unified content.
+The three homepage designs had some real content differences between them
+(desktop added a 3rd hero trust badge, an availability badge, a 6th
+"Something else?" concern card, a 2nd About paragraph, a 3rd testimonial;
+tablet omitted the availability badge entirely). Per-item, the richer
+version was used across **all three** tiers — see `src/config/site.ts`
+for the unified content.
 
-The rest of the sitemap (About, Services, specialty pages, How I Work,
-Fees, FAQ, Blog, Contact/Book, Privacy Policy) is planned per the Website
-Plan and Build Spec docs but not yet built.
+The homepage's "8+ yrs" experience figure was replaced with "3+ years"
+sitewide (`site.experienceYears`) to match the About page copy, which the
+user confirmed as the correct figure.
+
+`/about` reuses `ConcernCard` for the three-modalities section and a new
+`CredentialsList` component (understated, with a clearly-flagged "pending
+confirmation" treatment for the RCI/degree placeholder — no invented
+credentials). `Nav`'s link set is now root-relative (`/#concerns` etc.) so
+it resolves correctly from non-home pages, and the closing CTA block is
+now a shared `ClosingCta` component (heading is now a prop — Home/About
+use "Whenever you're ready, I'm here.", service pages use their own
+question-style heading).
+
+**`src/pages/services/[slug].astro`** is a single reusable template driven
+by `src/config/services.ts` (keyed by slug: `hypnotherapy`,
+`counselling-psychology`, `expressive-arts-therapy`) — adding another
+specialty page later is just a new config entry, no new page code.
+`ConcernCard` gained an optional `href` so it can act as a link — About's
+three modality cards now link through to their respective service pages,
+and the service pages cross-link each other inline within "Working with
+me" (e.g. Hypnotherapy → Counselling, Counselling → Hypnotherapy +
+Expressive Arts) per each page's own copy notes.
+
+Per the design notes for these two pages, each service page gets a
+distinct decorative-blob lean (`heroAccent` in `services.ts`) while
+keeping identical structure/tokens: Hypnotherapy is "balanced" (its
+original treatment), Expressive Arts Therapy is "warm" (clay/terracotta,
+a touch more expressive), Counselling Psychology is "calm" (restrained,
+sage-leaning). Counselling also skips the boxed myth-vs-reality card in
+favour of a plain, unboxed "worth knowing" list — its copy doc explicitly
+asked for this page to be more prose-led than the other two, and it's the
+only one of the three with a 7th "catch-all" card in the concerns grid
+(dashed border, matching the homepage's "Something else?" tile pattern).
+
+`ServiceContent`'s `workingWithMe.paragraphs` is an array of `TextSegment`
+arrays (`{ text, href?, emphasis? }`) rather than plain strings, so a
+paragraph can mix plain text, inline links, and the muted "(… — pending
+confirmation)" aside in any order — that's what makes the cross-linking
+and the CHI-USA/UNESCO-CIDS/RCI pending notes work without a markdown
+parser.
+
+The confirmed real WhatsApp/call number (**+91 97170 78394**, from the
+Hypnotherapy Page Copy doc) replaced the placeholder sitewide — every page
+now shares the same working number.
+
+**Unlike Hypnotherapy's copy (explicitly pre-approved, only CHI-USA
+pending), the Counselling Psychology and Expressive Arts Therapy pages
+were built from copy docs the user did supply in full** — so all three
+service pages are implemented from user-provided copy, not drafted by
+Claude. The only pending items across all three are the credential
+expansions each copy doc itself flagged (CHI-USA, UNESCO-CIDS, RCI
+registration/degree).
+
+The rest of the sitemap (Services overview, remaining specialty pages —
+Anxiety & Stress, Depression, Trauma/PTSD, Relationships/Family, Work
+Stress & Burnout, Online Therapy — How I Work, Fees, FAQ, Blog,
+Contact/Book, Privacy Policy) is planned per the Website Plan and Build
+Spec docs but not yet built.
 
 ## Running locally
 
@@ -60,13 +120,22 @@ function, CMS, or payment integration wired up. See "Not yet built" below.
 src/
 ├── assets/images/    real photos (hero + about) extracted from the design tool
 ├── components/       Button, WhatsAppCTA, CallCTA, TrustStrip, ConcernCard,
-│                      StepItem, FeeCard, TestimonialCard, CrisisNote,
-│                      AvailabilityBadge, Section, Header (mobile), Nav
-│                      (desktop), Footer, StickyCtaBar (mobile)
-├── config/site.ts     contact numbers, NAP, fees, crisis line, rating,
-│                      concerns/testimonials data — single source of truth
+│                      StepItem, FeeCard, TestimonialCard, CredentialsList,
+│                      CrisisNote, AvailabilityBadge, ClosingCta, Section,
+│                      Header (mobile), Nav (tablet+desktop), Footer,
+│                      StickyCtaBar (mobile)
+├── config/
+│   ├── site.ts        contact numbers, NAP, fees, crisis line, rating,
+│   │                  concerns/testimonials/about content — single source
+│   │                  of truth
+│   └── services.ts    service-page content keyed by slug (hypnotherapy,
+│                      counselling-psychology, expressive-arts-therapy)
 ├── layouts/Layout.astro  page chrome: meta tags, nav, footer, sticky CTA bar
-├── pages/index.astro  the Home page
+├── pages/
+│   ├── index.astro         Home
+│   ├── about.astro         About Aarushi
+│   └── services/
+│       └── [slug].astro    reusable service-page template
 └── styles/global.css  design tokens + the `.wrap` container (three tiers:
                        480px mobile column below `md`, the tablet design's
                        834px card from `md` to `lg`, the desktop design's
@@ -77,8 +146,6 @@ src/
 
 Tracked in `src/config/site.ts` and inline comments:
 
-- **WhatsApp / call numbers** — currently a placeholder (`+91 90000 00000`).
-  Swap `whatsappNumber` / `callNumber` in `src/config/site.ts`.
 - **Credentials wording** — RCI registration number and degree institution
   are not yet confirmed by Aarushi (Website Plan, "Still open" #1). The
   hero/about copy only uses what's already confirmed (role titles,
@@ -92,6 +159,20 @@ Tracked in `src/config/site.ts` and inline comments:
   until Aarushi confirms permissibility with her professional body.
 - **Vandrevala Foundation crisis number** — marked "verify before
   publishing" in the Build Spec; carried through as-is.
+- **Portraits reused across pages** — Home, About, and the Hypnotherapy
+  page all reuse the same real photo (different crops/shapes). The About
+  brief asked for a "softer, more personal" portrait distinct from the
+  homepage's — no second photo was available to extract, so this needs a
+  real replacement from Aarushi before launch.
+- **About page credentials** — RCI registration and core degree are a
+  clearly-flagged placeholder row in `src/config/site.ts` (`about.credentials`,
+  last item, `pending: true`) — same "do not invent" rule as above.
+- **Credential expansions on the service pages** — each is the only
+  placeholder its own copy doc flagged: CHI-USA (Hypnotherapy),
+  UNESCO-CIDS (Expressive Arts Therapy), RCI registration/core degree
+  (Counselling Psychology). All in `src/config/services.ts`, rendered as
+  a muted "(… — pending confirmation)" aside inline in "Working with me" —
+  same "do not invent" rule as above.
 
 ## Not yet built
 

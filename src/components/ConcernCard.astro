@@ -4,13 +4,30 @@ interface Props {
   description: string;
   color: string;
   radius?: string;
+  href?: string;
   class?: string;
 }
 
-const { title, description, color, radius = "50% 50% 46% 54%", class: className = "" } = Astro.props;
+const {
+  title,
+  description,
+  color,
+  radius = "50% 50% 46% 54%",
+  href,
+  class: className = "",
+} = Astro.props;
+
+const Tag = href ? "a" : "div";
 ---
 
-<div class:list={["rounded-[22px] bg-white p-[18px] md:rounded-[24px] md:p-6 lg:p-[26px]", className]}>
+<Tag
+  href={href}
+  class:list={[
+    "block rounded-[22px] bg-white p-[18px] md:rounded-[24px] md:p-6 lg:p-[26px]",
+    href && "transition-transform duration-150 ease-out hover:-translate-y-0.5",
+    className,
+  ]}
+>
   <div
     class="mb-3 h-8 w-8 md:mb-3.5 md:h-[38px] md:w-[38px] lg:mb-4 lg:h-10 lg:w-10"
     style={{ background: color, borderRadius: radius }}
@@ -19,4 +36,4 @@ const { title, description, color, radius = "50% 50% 46% 54%", class: className 
   <div class="mt-[3px] text-[12.5px] leading-[1.4] text-ink-muted md:mt-[5px] md:text-sm md:leading-[1.5]">
     {description}
   </div>
-</div>
+</Tag>

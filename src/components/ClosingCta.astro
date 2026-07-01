@@ -1,0 +1,37 @@
+---
+import WhatsAppCTA from "./WhatsAppCTA.astro";
+import CallCTA from "./CallCTA.astro";
+
+interface Props {
+  heading?: string;
+  subhead: string;
+  class?: string;
+}
+
+const {
+  heading = "Whenever you're ready, I'm here.",
+  subhead,
+  class: className = "",
+} = Astro.props;
+---
+
+<div class:list={["relative overflow-hidden", className]}>
+  <div
+    class="absolute -left-[70px] -top-10 h-[180px] w-[180px] rounded-[58%_42%_47%_53%/55%_44%_56%_45%] bg-clay-100 md:-left-[60px] md:-top-[70px] md:h-[220px] md:w-[220px] lg:-left-[70px] lg:-top-20 lg:h-[260px] lg:w-[260px]"
+  >
+  </div>
+  <div class="wrap relative pb-11 pt-12 text-center md:py-[72px] lg:py-[88px]">
+    <div class="text-balance font-display text-[27px] font-bold leading-[1.15] text-ink md:text-[36px] md:leading-[1.1] lg:text-[44px]">
+      {heading}
+    </div>
+    <p class="mx-auto mt-3 max-w-[300px] text-[15px] leading-[1.55] text-ink-soft md:mt-3.5 md:max-w-[400px] md:text-[17px] lg:mt-4 lg:max-w-[440px] lg:text-[18px]">
+      {subhead}
+    </p>
+    <div class="mt-[22px] flex justify-center gap-3 md:mt-7 lg:mt-8 lg:gap-3.5">
+      <WhatsAppCTA size="lg">Book on WhatsApp</WhatsAppCTA>
+      <span class="hidden md:inline-flex">
+        <CallCTA size="lg">Call</CallCTA>
+      </span>
+    </div>
+  </div>
+</div>
