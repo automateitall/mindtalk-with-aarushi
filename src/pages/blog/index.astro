@@ -1,0 +1,59 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Section from "../../components/Section.astro";
+import BlogCard from "../../components/BlogCard.astro";
+import { site } from "../../config/site";
+
+const allPosts = await getCollection("blog", ({ data }) => data.published);
+const posts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const title = `Blog — ${site.name}`;
+const description = "Warm, practical writing on anxiety, stress, relationships, and therapy from Aarushi Sabharwal.";
+---
+
+<Layout title={title} description={description}>
+  <!-- ===== HERO ===== -->
+  <div class="relative overflow-hidden">
+    <div class="absolute -right-[70px] -top-20 h-[220px] w-[220px] rounded-[58%_42%_47%_53%/55%_44%_56%_45%] bg-sage-50 md:-top-24 md:h-[280px] md:w-[280px] lg:-right-16 lg:-top-28 lg:h-[340px] lg:w-[340px]">
+    </div>
+    <div class="absolute -left-14 top-[170px] h-[110px] w-[110px] rounded-[50%_50%_45%_55%/55%_50%_50%_45%] bg-clay-100 md:top-auto md:-bottom-8 md:-left-[50px] md:h-[140px] md:w-[140px] lg:-left-16 lg:-bottom-5 lg:h-[170px] lg:w-[170px]">
+    </div>
+
+    <Header />
+
+    <div class="wrap relative pb-8 pt-[22px] md:pb-10 md:pt-10 md:text-center lg:pb-12 lg:pt-12">
+      <div class="mb-2.5 font-display text-sm font-semibold tracking-[0.01em] text-terracotta md:mx-auto md:mb-3 md:text-[15px] lg:mb-3.5 lg:text-base">
+        Blog
+      </div>
+      <h1 class="m-0 text-balance font-display text-[30px] font-bold leading-[1.14] tracking-[-0.02em] text-ink md:mx-auto md:max-w-[580px] md:text-[38px] md:leading-[1.1] lg:max-w-[680px] lg:text-[44px] lg:leading-[1.08]">
+        Warm, practical writing — for whenever you need it
+      </h1>
+      <p class="mt-3 text-[15.5px] leading-[1.55] text-ink-soft md:mx-auto md:mt-4 md:max-w-[540px] md:text-[16.5px] lg:max-w-[600px] lg:text-[17.5px]">
+        Notes on anxiety, stress, relationships, and what therapy actually looks like — written to be genuinely useful, not clinical.
+      </p>
+    </div>
+  </div>
+
+  <!-- ===== POST GRID ===== -->
+  <Section innerClass="wrap pb-10 pt-2 md:pb-12 lg:pb-14">
+    {
+      posts.length > 0 ? (
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-5">
+          {posts.map((post) => (
+            <BlogCard
+              title={post.data.title}
+              excerpt={post.data.excerpt}
+              date={post.data.date}
+              coverImage={post.data.coverImage}
+              href={`/blog/${post.id}`}
+            />
+          ))}
+        </div>
+      ) : (
+        <p class="text-center text-[15px] text-ink-soft">Nothing published yet — check back soon.</p>
+      )
+    }
+  </Section>
+</Layout>

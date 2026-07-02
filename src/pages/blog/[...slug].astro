@@ -1,0 +1,165 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Section from "../../components/Section.astro";
+import BlogCard from "../../components/BlogCard.astro";
+import ClosingCta from "../../components/ClosingCta.astro";
+import { getRelatedPosts, tagToConcernSlug } from "../../config/blog";
+import { site } from "../../config/site";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => data.published);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+interface Props {
+  post: CollectionEntry<"blog">;
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const relatedPosts = await getRelatedPosts(post);
+
+const formattedDate = post.data.date.toLocaleDateString("en-IN", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
+
+const title = post.data.seoTitle ?? `${post.data.title} — ${site.name}`;
+const description = post.data.seoDescription ?? post.data.excerpt;
+---
+
+<Layout title={title} description={description}>
+  <!-- ===== HERO ===== -->
+  <div class="relative overflow-hidden">
+    <div class="absolute -right-[70px] -top-20 h-[220px] w-[220px] rounded-[58%_42%_47%_53%/55%_44%_56%_45%] bg-sage-50 md:-top-24 md:h-[280px] md:w-[280px] lg:-right-16 lg:-top-28 lg:h-[340px] lg:w-[340px]">
+    </div>
+
+    <Header />
+
+    <div class="wrap relative pb-6 pt-[22px] md:pb-8 md:pt-10 lg:pb-10 lg:pt-12">
+      <a
+        href="/blog"
+        class="inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-ink-soft md:text-sm"
+      >
+        ← Blog
+      </a>
+
+      <div class="mt-4 md:mt-5 md:mx-auto md:max-w-[640px] md:text-center lg:max-w-[720px]">
+        <div class="text-xs text-ink-muted md:text-[13px]">{formattedDate}</div>
+        <h1 class="mt-2 text-balance font-display text-[27px] font-bold leading-[1.16] tracking-[-0.02em] text-ink md:text-[34px] md:leading-[1.12] lg:text-[40px] lg:leading-[1.1]">
+          {post.data.title}
+        </h1>
+      </div>
+    </div>
+  </div>
+
+  {
+    post.data.coverImage && (
+      <div class="wrap pb-2 md:mx-auto md:max-w-[720px]">
+        <Image
+          src={post.data.coverImage}
+          alt=""
+          width={840}
+          height={440}
+          class="h-[200px] w-full rounded-[20px] object-cover md:h-[320px] md:rounded-[24px]"
+        />
+      </div>
+    )
+  }
+
+  <!-- ===== BODY ===== -->
+  <Section innerClass="wrap py-6 md:py-8 lg:py-10">
+    <div class="prose-mindtalk md:mx-auto md:max-w-[640px] lg:max-w-[720px]">
+      <Content />
+    </div>
+
+    {
+      post.data.tags.length > 0 && (
+        <div class="mt-8 flex flex-wrap gap-2 md:mx-auto md:max-w-[640px] lg:max-w-[720px]">
+          {post.data.tags.map((tag) => {
+            const concernSlug = tagToConcernSlug[tag];
+            const Tag = concernSlug ? "a" : "span";
+            return (
+              <Tag
+                href={concernSlug ? `/${concernSlug}` : undefined}
+                class="rounded-full bg-cream-alt px-3 py-1.5 text-xs font-semibold capitalize text-ink-soft"
+              >
+                {tag}
+              </Tag>
+            );
+          })}
+        </div>
+      )
+    }
+
+    <div class="mt-8 flex flex-wrap items-center gap-3 border-t border-[rgba(160,120,90,0.14)] pt-6 md:mx-auto md:max-w-[640px] lg:max-w-[720px]">
+      <span class="text-xs font-semibold text-ink-muted">Share:</span>
+      <a
+        href={`https://wa.me/?text=${encodeURIComponent(post.data.title)}%20`}
+        id="share-whatsapp"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-[13.5px] font-semibold text-terracotta underline decoration-[rgba(192,118,90,0.35)] underline-offset-[3px]"
+      >
+        WhatsApp
+      </a>
+      <button
+        id="copy-link"
+        type="button"
+        class="text-[13.5px] font-semibold text-terracotta underline decoration-[rgba(192,118,90,0.35)] underline-offset-[3px]"
+      >
+        Copy link
+      </button>
+    </div>
+  </Section>
+
+  <!-- ===== RELATED POSTS ===== -->
+  {
+    relatedPosts.length > 0 && (
+      <Section background="alt" innerClass="wrap py-10 md:py-12 lg:py-14">
+        <div class="font-display text-[22px] font-bold text-ink md:text-[26px]">More like this</div>
+        <div class="mt-5 grid grid-cols-1 gap-4 md:mt-6 md:grid-cols-3 md:gap-4">
+          {relatedPosts.map((related) => (
+            <BlogCard
+              title={related.data.title}
+              excerpt={related.data.excerpt}
+              date={related.data.date}
+              coverImage={related.data.coverImage}
+              href={`/blog/${related.id}`}
+            />
+          ))}
+        </div>
+      </Section>
+    )
+  }
+
+  <!-- ===== SOFT CTA ===== -->
+  <ClosingCta subhead="If any of this feels familiar, I'd be glad to help you work through it." />
+</Layout>
+
+<script>
+  // Reads window.location at click-time rather than baking in Astro.url,
+  // since `site` isn't configured in astro.config.mjs (canonical URLs
+  // resolve relative to the request, not a fixed domain).
+  const whatsapp = document.getElementById("share-whatsapp");
+  if (whatsapp instanceof HTMLAnchorElement) {
+    whatsapp.href = `${whatsapp.href}${window.location.href}`;
+  }
+
+  const copyButton = document.getElementById("copy-link");
+  copyButton?.addEventListener("click", async () => {
+    await navigator.clipboard.writeText(window.location.href);
+    const original = copyButton.textContent;
+    copyButton.textContent = "Copied!";
+    setTimeout(() => {
+      copyButton.textContent = original;
+    }, 1800);
+  });
+</script>

@@ -70,6 +70,76 @@
   }
 }
 
+@layer components {
+  /* Styles rendered Markdown/MDX post bodies — no Tailwind typography
+     plugin installed, so headings/lists/links are hand-styled here to
+     match the rest of the site's type scale and colour tokens. */
+  .prose-mindtalk {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--color-ink-soft);
+  }
+  .prose-mindtalk > * + * {
+    margin-top: 1.1em;
+  }
+  .prose-mindtalk h2 {
+    margin-top: 1.6em;
+    font-family: var(--font-display);
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--color-ink);
+  }
+  .prose-mindtalk h3 {
+    margin-top: 1.4em;
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--color-ink);
+  }
+  .prose-mindtalk ul,
+  .prose-mindtalk ol {
+    padding-left: 1.25em;
+  }
+  .prose-mindtalk ul {
+    list-style: disc;
+  }
+  .prose-mindtalk ol {
+    list-style: decimal;
+  }
+  .prose-mindtalk li + li {
+    margin-top: 0.5em;
+  }
+  .prose-mindtalk a {
+    font-weight: 600;
+    color: var(--color-terracotta);
+    text-decoration: underline;
+    text-decoration-color: rgba(192, 118, 90, 0.35);
+    text-underline-offset: 3px;
+  }
+  .prose-mindtalk strong {
+    font-weight: 700;
+    color: var(--color-ink);
+  }
+  .prose-mindtalk blockquote {
+    border-left: 3px solid var(--color-sage);
+    padding-left: 1em;
+    font-style: italic;
+  }
+  @media (width >= 64rem) {
+    .prose-mindtalk {
+      font-size: 17px;
+    }
+    .prose-mindtalk h2 {
+      font-size: 23px;
+    }
+    .prose-mindtalk h3 {
+      font-size: 19px;
+    }
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;

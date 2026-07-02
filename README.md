@@ -8,15 +8,16 @@ prototypes this build implements live in `design/` for reference.
 
 ## Status
 
-**11 pages**: Home, About, a Services hub, three service pages
+**13+ pages**: Home, About, a Services hub, three service pages
 (Hypnotherapy, Counselling Psychology, Expressive Arts Therapy) on a
-reusable template, and five concern pages (Anxiety & Stress, Depression &
+reusable template, five concern pages (Anxiety & Stress, Depression &
 Low Mood, Trauma & PTSD, Relationships & Family, Work Stress & Burnout)
-on a second reusable template — all responsive across three tiers
-(mobile / tablet / desktop). Home was implemented from three Claude
-Design exports; every other page was built from written specs + copy (no
-Claude Design mockups), reusing the same components, tokens, and
-breakpoint system for visual consistency.
+on a second reusable template, and a blog (index + a per-post template,
+backed by an Astro content collection, currently 3 sample posts) — all
+responsive across three tiers (mobile / tablet / desktop). Home was
+implemented from three Claude Design exports; every other page was built
+from written specs + copy (no Claude Design mockups), reusing the same
+components, tokens, and breakpoint system for visual consistency.
 
 - `design/project/MindTalk Homepage.dc.html` — mobile ("2b — Warm Organic",
   locked in during design review)
@@ -142,12 +143,28 @@ content a search engine or visitor doesn't already get from `/services`'
 else?") intentionally stays unlinked, same as the equivalent tiles on
 About and the service pages.
 
-**`src/config/blog.ts`** is a stub (`posts: []` + `getPostsByTag`) so
-concern pages' "Related reading" section can render conditionally now —
-it correctly renders nothing today — without needing template changes
-once a real blog/CMS exists.
+**Blog** (`/blog` index + `/blog/[...slug]` post template) is backed by a
+real Astro content collection (`src/content.config.ts`, Markdown files in
+`src/content/blog/`), not the old stub — decided over wiring up Tina CMS
+now, since Tina needs a GitHub remote + external Tina Cloud account that
+this sandbox doesn't have (`Build content collection now, Tina later`,
+per the user). `src/config/blog.ts` exposes `getPublishedPosts`,
+`getPostsByTag`, and `getRelatedPosts` (all async, `getCollection`-backed)
+plus a `tagToConcernSlug` map so a post tagged e.g. `"anxiety"` cross-links
+to `/anxiety-stress` and vice versa. 3 sample posts ship today, tagged
+`anxiety`, `burnout`, and `relationships` — concern pages' "Related
+reading" section (previously always empty) now renders real cards for
+those three and correctly still renders nothing for Depression and Trauma
+(no matching tagged posts yet — verified both ways with Playwright).
+Post bodies render via `@astrojs/mdx` + a hand-rolled `.prose-mindtalk`
+CSS class in `global.css` (no Tailwind typography plugin installed). Each
+post page has a WhatsApp-share link and a copy-link button, both built
+client-side off `window.location.href` at click-time rather than
+`Astro.url`, since `site` isn't set in `astro.config.mjs` (no fixed
+domain to resolve against yet). "Blog" was added to `site.navLinks`
+(shows on tablet + desktop nav, same as About/Fees).
 
-The rest of the sitemap (Online Therapy, How I Work, Fees, FAQ, Blog,
+The rest of the sitemap (Online Therapy, How I Work, Fees, FAQ,
 Contact/Book, Privacy Policy) is planned per the Website Plan and Build
 Spec docs but not yet built.
 
@@ -176,8 +193,12 @@ src/
 ├── components/       Button, WhatsAppCTA, CallCTA, TrustStrip, ConcernCard,
 │                      StepItem, FeeCard, TestimonialCard, CredentialsList,
 │                      CrisisNote, AvailabilityBadge, ClosingCta, Section,
-│                      Header (mobile), Nav (tablet+desktop), Footer,
-│                      StickyCtaBar (mobile)
+│                      BlogCard, Header (mobile), Nav (tablet+desktop),
+│                      Footer, StickyCtaBar (mobile)
+├── content.config.ts  defines the `blog` content collection (glob loader,
+│                      Zod schema: title/date/excerpt/coverImage/tags/
+│                      seoTitle/seoDescription/published)
+├── content/blog/      Markdown blog posts (3 sample posts today)
 ├── config/
 │   ├── site.ts        contact numbers, NAP, fees, crisis line, rating,
 │   │                  concerns/testimonials/about content — single source
@@ -188,21 +209,25 @@ src/
 │   ├── concerns.ts    concern-page content keyed by slug (anxiety-stress,
 │   │                  depression-low-mood, trauma-ptsd,
 │   │                  relationships-family, work-stress-burnout)
-│   └── blog.ts        stub (empty posts[] + getPostsByTag) for concern
-│                      pages' conditional "Related reading" section
+│   └── blog.ts        getPublishedPosts / getPostsByTag / getRelatedPosts
+│                      (content-collection-backed) + tagToConcernSlug map
 ├── layouts/Layout.astro  page chrome: meta tags, nav, footer, sticky CTA bar
 ├── pages/
 │   ├── index.astro         Home
 │   ├── about.astro         About Aarushi
 │   ├── [slug].astro        reusable concern-page template (root-level,
 │   │                        e.g. /anxiety-stress)
+│   ├── blog/
+│   │   ├── index.astro     Blog index
+│   │   └── [...slug].astro reusable blog-post template
 │   └── services/
 │       ├── index.astro     Services hub/overview (two-group layout)
 │       └── [slug].astro    reusable service-page template
-└── styles/global.css  design tokens + the `.wrap` container (three tiers:
+└── styles/global.css  design tokens, the `.wrap` container (three tiers:
                        480px mobile column below `md`, the tablet design's
                        834px card from `md` to `lg`, the desktop design's
-                       1160px content width at `lg` and up)
+                       1160px content width at `lg` and up), and
+                       `.prose-mindtalk` for rendered post bodies
 ```
 
 ## Pending inputs (do not guess these)
@@ -240,10 +265,12 @@ Tracked in `src/config/site.ts` and inline comments:
 ## Not yet built
 
 Per the Build Spec's build order, still ahead: Online Therapy, How I
-Work, Fees, FAQ, Contact/Book, Privacy Policy, the actual blog/CMS (Tina)
-that `blog.ts` is stubbed for, enquiry form + serverless email (Resend),
-paid booking flow (payment rail — Stripe vs Razorpay — still undecided),
-analytics, JSON-LD structured data, sitemap/robots, and Netlify deploy.
-None of these need guessing at; the three docs in `design/` (or wherever
-the Design Brief / Website Plan / Build Spec live) spell out the
-decisions already made and what's still open.
+Work, Fees, FAQ, Contact/Book, Privacy Policy, wiring the blog up to Tina
+CMS (needs a GitHub remote + external Tina Cloud account — out of reach
+in this sandbox; the content collection it'll sit on top of is already
+built), enquiry form + serverless email (Resend), paid booking flow
+(payment rail — Stripe vs Razorpay — still undecided), analytics, JSON-LD
+structured data, sitemap/robots, and Netlify deploy. None of these need
+guessing at; the three docs in `design/` (or wherever the Design Brief /
+Website Plan / Build Spec live) spell out the decisions already made and
+what's still open.

@@ -179,6 +179,7 @@ export const site = {
   navLinks: [
     { href: "/#concerns", label: "How I help" },
     { href: "/about", label: "About" },
+    { href: "/blog", label: "Blog" },
     { href: "/#process", label: "How it works" },
     { href: "/#fees", label: "Fees" },
   ],

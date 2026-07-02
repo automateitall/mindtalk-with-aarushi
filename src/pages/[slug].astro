@@ -19,7 +19,7 @@ interface Props {
 }
 
 const { content } = Astro.props;
-const relatedPosts = getPostsByTag(content.relatedReadingTag);
+const relatedPosts = await getPostsByTag(content.relatedReadingTag, 3);
 
 const heading = "md:mx-auto md:max-w-[560px] md:text-center lg:max-w-[640px]";
 ---
@@ -127,10 +127,12 @@ const heading = "md:mx-auto md:max-w-[560px] md:text-center lg:max-w-[640px]";
         <div class="font-display text-[22px] font-bold text-ink md:text-[26px]">Related reading</div>
         <div class="mt-5 grid grid-cols-1 gap-4 md:mt-6 md:grid-cols-3 md:gap-4">
           {relatedPosts.map((post) => (
-            <a href={`/blog/${post.slug}`} class="block rounded-[22px] bg-white p-5 md:rounded-[24px] md:p-6">
-              <div class="font-display text-[16px] font-bold text-ink">{post.title}</div>
-              <p class="mt-2 text-[13.5px] leading-[1.55] text-ink-soft">{post.excerpt}</p>
-              <div class="mt-3 text-xs text-ink-muted">{post.date}</div>
+            <a href={`/blog/${post.id}`} class="block rounded-[22px] bg-white p-5 md:rounded-[24px] md:p-6">
+              <div class="font-display text-[16px] font-bold text-ink">{post.data.title}</div>
+              <p class="mt-2 text-[13.5px] leading-[1.55] text-ink-soft">{post.data.excerpt}</p>
+              <div class="mt-3 text-xs text-ink-muted">
+                {post.data.date.toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}
+              </div>
             </a>
           ))}
         </div>
