@@ -1,0 +1,37 @@
+---
+// Sitewide LocalBusiness JSON-LD. Deliberately excludes `aggregateRating`/
+// `review` — Google's structured-data policy requires ratings to be
+// genuine and verifiable, and site.rating (4.7★, used in on-page copy
+// per the Website Plan) isn't confirmed against real review data, so
+// publishing it as machine-readable review markup risks a manual action.
+// Revisit once real reviews are confirmed. `image`/`telephone`/`email`/
+// `url` reuse the same real/placeholder values as the rest of the site —
+// see src/config/site.ts for what's still pending.
+import heroPhoto from "../assets/images/aarushi-hero.webp";
+import { site } from "../config/site";
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: site.name,
+  image: `${site.url}${heroPhoto.src}`,
+  telephone: site.callNumber,
+  email: site.email,
+  url: site.url,
+  priceRange: site.fees.inPerson.price,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: site.address.line1,
+    addressLocality: "New Delhi",
+    postalCode: "110001",
+    addressCountry: "IN",
+  },
+  founder: {
+    "@type": "Person",
+    name: site.practitioner,
+    jobTitle: site.roles.join(", "),
+  },
+};
+---
+
+<script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />

@@ -1,13 +1,10 @@
 ---
-import { Image } from "astro:assets";
-import type { ImageMetadata } from "astro";
-
 interface Props {
   title: string;
   excerpt: string;
   date: Date;
   href: string;
-  coverImage?: ImageMetadata;
+  coverImage?: string;
   class?: string;
 }
 
@@ -25,7 +22,7 @@ const formattedDate = date.toLocaleDateString("en-IN", { day: "numeric", month: 
 >
   {
     coverImage ? (
-      <Image src={coverImage} alt="" width={400} height={220} class="h-[160px] w-full object-cover md:h-[180px]" />
+      <img src={coverImage} alt="" width={400} height={220} class="h-[160px] w-full object-cover md:h-[180px]" />
     ) : (
       <div class="flex h-[90px] items-end px-5 pt-5 md:h-[100px] md:px-6 md:pt-6">
         <div class="h-9 w-9 rounded-[52%_48%_47%_53%/50%_52%_48%_50%] bg-clay-100" />

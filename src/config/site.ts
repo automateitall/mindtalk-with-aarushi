@@ -4,11 +4,16 @@
 // Still PLACEHOLDER — swap before launch:
 //   - credentials: RCI registration number + degree are not yet confirmed
 //     by Aarushi (see Website Plan §"Still open"). Do not invent these.
+//   - url: no production domain has been decided/purchased yet. Swap this
+//     (and astro.config.mjs's `site`) for the real one before launch —
+//     it feeds canonical URLs, the sitemap, robots.txt, and JSON-LD.
 
 const experienceYears = "3+";
 
 export const site = {
   name: "MindTalk with Aarushi",
+  // PLACEHOLDER — no real domain yet; swap here and in astro.config.mjs.
+  url: "https://mindtalkwitharushi.example",
   practitioner: "Aarushi Sabharwal",
   roles: [
     "Counselling Psychologist",

@@ -56,19 +56,11 @@ export default defineConfig({
             required: true,
           },
           {
-            // NOTE: Tina's local media manager writes uploads into
-            // public/uploads and stores this field as a public-relative
-            // URL string. Astro's content collection schema
-            // (src/content.config.ts) currently types `coverImage` with
-            // the `image()` helper, which expects a Vite-resolvable
-            // relative path instead (for astro:assets optimization) — a
-            // path from here won't validate against that schema as-is.
-            // No posts use coverImage yet, so this isn't live-broken, but
-            // fix one side before the first real upload: either relax
-            // the Astro schema to a plain `z.string()` and swap
-            // `<Image>` for a plain `<img>` in BlogCard/[...slug].astro,
-            // or reconfigure Tina's mediaRoot to write inside
-            // src/content/blog instead of public/uploads.
+            // Tina's local media manager uploads into public/uploads and
+            // stores this field as a public-relative URL string —
+            // matches src/content.config.ts's `coverImage: z.string()`.
+            // Rendered via a plain <img>, not astro:assets' <Image>, as a
+            // result (no automatic resize/format conversion).
             type: "image",
             name: "coverImage",
             label: "Cover Image",

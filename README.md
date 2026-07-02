@@ -145,24 +145,49 @@ About and the service pages.
 
 **Blog** (`/blog` index + `/blog/[...slug]` post template) is backed by a
 real Astro content collection (`src/content.config.ts`, Markdown files in
-`src/content/blog/`), not the old stub — decided over wiring up Tina CMS
-now, since Tina needs a GitHub remote + external Tina Cloud account that
-this sandbox doesn't have (`Build content collection now, Tina later`,
-per the user). `src/config/blog.ts` exposes `getPublishedPosts`,
-`getPostsByTag`, and `getRelatedPosts` (all async, `getCollection`-backed)
-plus a `tagToConcernSlug` map so a post tagged e.g. `"anxiety"` cross-links
-to `/anxiety-stress` and vice versa. 3 sample posts ship today, tagged
-`anxiety`, `burnout`, and `relationships` — concern pages' "Related
-reading" section (previously always empty) now renders real cards for
-those three and correctly still renders nothing for Depression and Trauma
-(no matching tagged posts yet — verified both ways with Playwright).
-Post bodies render via `@astrojs/mdx` + a hand-rolled `.prose-mindtalk`
-CSS class in `global.css` (no Tailwind typography plugin installed). Each
+`src/content/blog/`), not the old stub. `src/config/blog.ts` exposes
+`getPublishedPosts`, `getPostsByTag`, and `getRelatedPosts` (all async,
+`getCollection`-backed) plus a `tagToConcernSlug` map so a post tagged
+e.g. `"anxiety"` cross-links to `/anxiety-stress` and vice versa. 3 sample
+posts ship today, tagged `anxiety`, `burnout`, and `relationships` —
+concern pages' "Related reading" section (previously always empty) now
+renders real cards for those three and correctly still renders nothing
+for Depression and Trauma (no matching tagged posts yet — verified both
+ways with Playwright). Post bodies render via `@astrojs/mdx` + a
+hand-rolled `.prose-mindtalk` CSS class in `global.css` (no Tailwind
+typography plugin installed). `coverImage` is a plain string URL, not
+`astro:assets`' `image()` helper, so it renders via a plain `<img>` — a
+deliberate tradeoff (see `src/content.config.ts`) to match what Tina's
+media manager writes when someone uploads a cover image through it. Each
 post page has a WhatsApp-share link and a copy-link button, both built
 client-side off `window.location.href` at click-time rather than
-`Astro.url`, since `site` isn't set in `astro.config.mjs` (no fixed
-domain to resolve against yet). "Blog" was added to `site.navLinks`
-(shows on tablet + desktop nav, same as About/Fees).
+`Astro.url`, so links are correct on preview deploys too.
+
+**Tina CMS** is scaffolded (`tina/config.ts`, schema mirroring
+`src/content.config.ts`; `package.json`'s `dev`/`build` now run through
+`tinacms`) but not fully verified — this sandbox's network policy blocks
+outbound access to Tina Cloud's API (`content.tinajs.io`, `app.tina.io`),
+so `tinacms dev`/`tinacms build` can't complete here. Confirmed working:
+type-checking (`astro check`) and the plain `astro build` (Tina scaffolding
+doesn't affect the site if Tina itself isn't reachable). Needs verifying
+`/admin` end-to-end once run somewhere with normal internet access (a
+local machine, or a real deploy). Client ID/token live in `.env`
+(git-ignored; `.env.example` documents the two variable names).
+
+**`site.url`** (`src/config/site.ts`) is a placeholder domain
+(`mindtalkwitharushi.example`) — no real domain has been bought/decided
+yet. It feeds `astro.config.mjs`'s `site` (which fixes canonical URLs
+sitewide), the sitemap (`@astrojs/sitemap`, auto-generated at
+`/sitemap-index.xml`), `/robots.txt` (`src/pages/robots.txt.ts`, a small
+dynamic endpoint rather than a static file so it can't drift from
+`site.url`), and the JSON-LD in `src/components/StructuredData.astro`
+(sitewide, in `Layout.astro`'s `<head>`). Swap this one value before
+launch and all four update together. The JSON-LD deliberately omits
+`aggregateRating`/`review` — Google's structured-data policy requires
+those to be genuine and verifiable, and the on-page 4.7★ figure isn't
+confirmed against real review data (see "Pending inputs" below) — so
+publishing it as machine-readable review markup would risk a manual
+action. Revisit once a real rating is confirmed.
 
 The rest of the sitemap (Online Therapy, How I Work, Fees, FAQ,
 Contact/Book, Privacy Policy) is planned per the Website Plan and Build
@@ -261,16 +286,22 @@ Tracked in `src/config/site.ts` and inline comments:
   (Counselling Psychology). All in `src/config/services.ts`, rendered as
   a muted "(… — pending confirmation)" aside inline in "Working with me" —
   same "do not invent" rule as above.
+- **Production domain** — `site.url` in `src/config/site.ts` is a
+  placeholder (`mindtalkwitharushi.example`). Feeds canonical URLs, the
+  sitemap, `robots.txt`, and JSON-LD — swap it (and nothing else) once a
+  real domain is bought/decided.
 
 ## Not yet built
 
 Per the Build Spec's build order, still ahead: Online Therapy, How I
-Work, Fees, FAQ, Contact/Book, Privacy Policy, wiring the blog up to Tina
-CMS (needs a GitHub remote + external Tina Cloud account — out of reach
-in this sandbox; the content collection it'll sit on top of is already
-built), enquiry form + serverless email (Resend), paid booking flow
-(payment rail — Stripe vs Razorpay — still undecided), analytics, JSON-LD
-structured data, sitemap/robots, and Netlify deploy. None of these need
-guessing at; the three docs in `design/` (or wherever the Design Brief /
-Website Plan / Build Spec live) spell out the decisions already made and
-what's still open.
+Work, Fees, FAQ, Contact/Book, Privacy Policy, finishing Tina CMS
+end-to-end (config is scaffolded — see "Blog" above — but unverified past
+`astro check`/`astro build` since this sandbox can't reach Tina Cloud's
+API; needs a run somewhere with normal internet access), enquiry form +
+serverless email (Resend), paid booking flow (payment rail — Stripe vs
+Razorpay — still undecided), analytics, and Netlify deploy (which is also
+when `site.url` needs to become a real domain — see "Pending inputs").
+Sitemap, robots.txt, and JSON-LD structured data are done (see "Blog"
+above). None of these need guessing at; the three docs in `design/` (or
+wherever the Design Brief / Website Plan / Build Spec live) spell out the
+decisions already made and what's still open.
