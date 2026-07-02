@@ -2,6 +2,9 @@
 dist/
 # generated types
 .astro/
+# Tina's generated admin app + local cache
+public/admin/
+tina/__generated__/
 
 # dependencies
 node_modules/
