@@ -449,13 +449,24 @@ export interface ServiceCard {
   color: string;
 }
 
+export interface ConcernLink {
+  slug: string;
+  title: string;
+  description: string;
+}
+
 export const servicesHub = {
-  seoTitle: "Therapy Services in Delhi — Counselling, Hypnotherapy & Expressive Arts | MindTalk with Aarushi",
+  seoTitle: "Therapy Services in Delhi — Counselling, Hypnotherapy & More | MindTalk with Aarushi",
   seoDescription:
-    "Warm, personalised therapy with Aarushi Sabharwal in Gole Market, Delhi & online — counselling psychology, hypnotherapy, and expressive arts therapy, tailored to you.",
+    "Warm, personalised therapy with Aarushi Sabharwal in Gole Market, Delhi & online — counselling, hypnotherapy, expressive arts, and support for anxiety, depression, trauma and more.",
   eyebrow: "How I can help",
   headline: "Different ways forward — all in one warm, safe space",
-  lead: "Everyone arrives with something different, so I don't work one-size-fits-all. I offer three complementary approaches — and often blend them — to find what genuinely helps you. Not sure which fits? That's normal. We'll figure it out together.",
+  lead: "Everyone arrives with something different, so I don't work one-size-fits-all. I offer three complementary approaches — and often blend them — to help with whatever you're carrying. Not sure where you fit? That's normal. We'll figure it out together.",
+
+  // ===== Group 1 — "How I work" (methods; primary, full-size cards) =====
+  groupWork: {
+    heading: "How I work",
+  },
 
   // Colors echo each service page's own heroAccent (sage=calm/Counselling,
   // balanced sage-50=Hypnotherapy, clay=warm/Expressive Arts).
@@ -463,30 +474,65 @@ export const servicesHub = {
     {
       slug: "counselling-psychology",
       title: "Counselling Psychology",
-      description:
-        "A warm, confidential space to talk things through and be truly heard — the heart of my practice. Helpful for anxiety, low mood, relationships, stress, and life's harder moments.",
+      description: "A warm, confidential space to talk things through and be truly heard — the heart of my practice.",
       color: "var(--color-sage-100)",
     },
     {
       slug: "hypnotherapy",
       title: "Hypnotherapy",
       description:
-        "A gentle, deeply relaxed state that helps ease anxiety and shift stuck patterns — not stage tricks, and you stay fully in control throughout.",
+        "A gentle, deeply relaxed state that helps ease anxiety and shift stuck patterns — you stay in control throughout.",
       color: "var(--color-sage-50)",
     },
     {
       slug: "expressive-arts-therapy",
       title: "Expressive Arts Therapy",
-      description:
-        "A creative, gentle way to explore feelings that are hard to put into words. No artistic skill needed — it's about expression, not skill.",
+      description: "A creative, gentle way to explore feelings that are hard to put into words. No artistic skill needed.",
       color: "var(--color-clay-200)",
     },
   ] satisfies ServiceCard[],
 
-  // Compressed 2-line band under the cards — not a full section. Format/fee
+  // Compressed 1-2 line band under the cards — not a full section. Format/fee
   // info lives on the Fees page, not duplicated here (see redesign notes).
   blendNote:
-    "Because I'm trained across all three, we're never limited to one path — we use whatever helps you move forward, always at your pace.",
+    "Because I'm trained across all three, we're never limited to one path — we use whatever helps you move forward, at your pace.",
+
+  // ===== Group 2 — "What I help with" (problems; secondary, lighter links) =====
+  groupConcerns: {
+    heading: "What I help with",
+    lead: "Not sure which approach you need? Start with what you're going through — I'll take it from there.",
+  },
+
+  concernLinks: [
+    {
+      slug: "anxiety-stress",
+      title: "Anxiety & Stress",
+      description: "Racing thoughts, tension, a mind that won't switch off.",
+    },
+    {
+      slug: "depression-low-mood",
+      title: "Depression & Low Mood",
+      description: "Heaviness, low energy, not feeling yourself.",
+    },
+    {
+      slug: "trauma-ptsd",
+      title: "Trauma & PTSD",
+      description: "Gentle, paced support — no need to relive it all.",
+    },
+    {
+      slug: "relationships-family",
+      title: "Relationships & Family",
+      description: "Conflict, distance, patterns that keep repeating.",
+    },
+    {
+      slug: "work-stress-burnout",
+      title: "Work Stress & Burnout",
+      description: "Exhausted, overstretched, running on empty.",
+    },
+  ] satisfies ConcernLink[],
+
+  // One compact line, not a full section.
+  formatNote: "In person in Gole Market, central Delhi, and online across India · 50-minute sessions.",
 
   cta: {
     heading: "Not sure where to start?",

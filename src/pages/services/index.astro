@@ -29,8 +29,11 @@ import { servicesHub } from "../../config/services";
     </div>
   </div>
 
-  <!-- ===== SERVICE CARDS + compressed blend band ===== -->
-  <Section innerClass="wrap pb-8 pt-2 md:pb-10 lg:pb-12">
+  <!-- ===== GROUP 1 — HOW I WORK (methods; primary cards) + compressed blend band ===== -->
+  <Section innerClass="wrap pb-6 pt-2 md:pb-8">
+    <div class="mb-4 font-display text-[13px] font-semibold uppercase tracking-[0.04em] text-ink-softer md:mb-5 md:text-sm">
+      {servicesHub.groupWork.heading}
+    </div>
     <div class="grid grid-cols-1 gap-3.5 md:grid-cols-3 md:gap-4 lg:gap-5">
       {
         servicesHub.cards.map((card) => (
@@ -55,11 +58,47 @@ import { servicesHub } from "../../config/services";
       }
     </div>
 
-    <!-- Compressed 2-line band, not a full section — format/fees live on the Fees page. -->
+    <!-- Compressed 1-2 line band, not a full section. -->
     <p class="mx-auto mt-6 max-w-[640px] text-center text-[14.5px] leading-[1.6] text-ink-soft md:mt-7 md:text-[15px] lg:mt-8">
       {servicesHub.blendNote}
     </p>
   </Section>
+
+  <!-- ===== GROUP 2 — WHAT I HELP WITH (problems; secondary, lighter links) ===== -->
+  <Section background="alt" class="mt-[30px] md:mt-10" innerClass="wrap py-8 md:py-10 lg:py-12">
+    <div class="mb-1 font-display text-[13px] font-semibold uppercase tracking-[0.04em] text-ink-softer md:text-sm">
+      {servicesHub.groupConcerns.heading}
+    </div>
+    <p class="mb-4 mt-1 text-[14.5px] leading-[1.55] text-ink-soft md:mb-5 md:text-[15px]">
+      {servicesHub.groupConcerns.lead}
+    </p>
+    <div class="grid grid-cols-1 gap-2.5 md:grid-cols-2 md:gap-3">
+      {
+        servicesHub.concernLinks.map((concern) => (
+          <a
+            href={`/${concern.slug}`}
+            class="group flex items-center gap-3 rounded-[16px] bg-white px-4 py-3.5 transition-transform duration-150 ease-out hover:-translate-y-0.5 md:px-5 md:py-4"
+          >
+            <div>
+              <div class="font-display text-[15px] font-semibold text-ink md:text-base">{concern.title}</div>
+              <div class="mt-0.5 text-[13px] leading-[1.4] text-ink-soft md:text-[13.5px]">{concern.description}</div>
+            </div>
+            <span
+              aria-hidden="true"
+              class="ml-auto flex-none text-terracotta transition-transform duration-150 ease-out group-hover:translate-x-0.5"
+            >
+              &rarr;
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </Section>
+
+  <!-- One compact format line, not a full section. -->
+  <p class="wrap py-6 text-center text-[13.5px] leading-[1.6] text-ink-muted md:py-7 md:text-sm">
+    {servicesHub.formatNote}
+  </p>
 
   <!-- ===== SOFT CTA ===== -->
   <ClosingCta heading={servicesHub.cta.heading} subhead={servicesHub.cta.subhead} />

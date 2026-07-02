@@ -8,12 +8,15 @@ prototypes this build implements live in `design/` for reference.
 
 ## Status
 
-**Home, About, a Services hub, and three service pages** (Hypnotherapy,
-Counselling Psychology, Expressive Arts Therapy) on a reusable template,
-all responsive across three tiers (mobile / tablet / desktop). Home was
-implemented from three Claude Design exports; every other page was built
-from written specs + copy (no Claude Design mockups), reusing the same
-components, tokens, and breakpoint system for visual consistency.
+**11 pages**: Home, About, a Services hub, three service pages
+(Hypnotherapy, Counselling Psychology, Expressive Arts Therapy) on a
+reusable template, and five concern pages (Anxiety & Stress, Depression &
+Low Mood, Trauma & PTSD, Relationships & Family, Work Stress & Burnout)
+on a second reusable template — all responsive across three tiers
+(mobile / tablet / desktop). Home was implemented from three Claude
+Design exports; every other page was built from written specs + copy (no
+Claude Design mockups), reusing the same components, tokens, and
+breakpoint system for visual consistency.
 
 - `design/project/MindTalk Homepage.dc.html` — mobile ("2b — Warm Organic",
   locked in during design review)
@@ -91,14 +94,14 @@ expansions each copy doc itself flagged (CHI-USA, UNESCO-CIDS, RCI
 registration/degree).
 
 **`/services`** (`servicesHub` in `services.ts`) is the overview/index
-page: a tight hero, three clickable service cards (color-echoing each
-page's own `heroAccent`) as the visual centrepiece, a compressed one-line
-"blend" note sitting directly under the cards, and a closing CTA.
-Deliberately built dense rather than airy — it's a signpost page, not a
-landing hero — so it skips the homepage's generous section spacing, and
-has no standalone format/fees section (that content lives on the future
-Fees page, not duplicated here per the redesign notes). Coexists as an
-Astro static route alongside the `services/[slug]` dynamic route with no
+page, now a **two-group layout** per its revised copy doc: "How I work"
+(the 3 modality cards, primary/full-size — unchanged) then "What I help
+with" (5 lighter, secondary link rows to the concern pages, visually
+subordinate to the modality cards on purpose). Deliberately dense, not
+airy — a signpost page, not a landing hero — with a compressed one-line
+"blend" note under the modality cards and a single compact format line
+(no standalone fees/format section; that lives on the future Fees page).
+Coexists as an Astro static route alongside `services/[slug]` with no
 conflict.
 
 **Fee correction:** the Services hub copy specified a flat ₹1,200 for
@@ -107,11 +110,46 @@ previous ₹1,500 (in-person) / ₹1,200 (online) split. The user confirmed
 ₹1,200 flat is correct — `site.fees` now reflects that, so the homepage's
 Fees section updated automatically (it reads from the same config).
 
-The rest of the sitemap (remaining specialty pages — Anxiety & Stress,
-Depression, Trauma/PTSD, Relationships/Family, Work Stress & Burnout,
-Online Therapy — How I Work, Fees, FAQ, Blog, Contact/Book, Privacy
-Policy) is planned per the Website Plan and Build Spec docs but not yet
-built.
+**Concern pages** (`src/config/concerns.ts` + root-level
+`src/pages/[slug].astro`, e.g. `/anxiety-stress`) are a *second* reusable
+template, distinct from the service-page one — deliberately root-level
+slugs rather than nested under `/services/`, per the design brief's own
+"concerns are a distinct group from services" framing. More emotionally
+led than the service pages (recognition hero → "What it can feel like"
+grid → a compact reassurance band → "How I can help" with inline links to
+the 3 modality pages → a compact "working together" band → a conditionally-
+rendered "Related reading" section → soft CTA → a crisis note that's a
+touch more present/careful than the service pages' foot note, per the
+brief). Each page gets a subtle blob-accent lean (`calm` / `warm` /
+`soft` in `concerns.ts`) — e.g. Depression uses `soft`, a deliberately
+muted/low-contrast treatment via Tailwind opacity modifiers on the
+existing sage/clay tokens, rather than a new color.
+
+**Cross-linking is bidirectional and verified both ways:** each concern
+page links inline to the 3 relevant service pages (all 3 modalities are
+referenced in every concern page's own copy); each service page links
+back to all 5 concern pages via a compact "Wondering if this fits…" band
+before its closing CTA. The Services hub's "What I help with" group links
+to all 5 concern pages too. The homepage's own "Does any of this feel
+familiar?" cards (`site.concerns` in `site.ts`) now link through to their
+matching concern pages as well — the highest-authority page on the site
+linking directly into each one, which is the actual SEO-correct way to
+signal these pages matter (a redundant `/concerns` index page was
+considered and deliberately skipped — would have cannibalized the same
+keywords `/services` already targets, and it wouldn't have added any
+content a search engine or visitor doesn't already get from `/services`'
+"What I help with" group). The homepage's own catch-all tile ("Something
+else?") intentionally stays unlinked, same as the equivalent tiles on
+About and the service pages.
+
+**`src/config/blog.ts`** is a stub (`posts: []` + `getPostsByTag`) so
+concern pages' "Related reading" section can render conditionally now —
+it correctly renders nothing today — without needing template changes
+once a real blog/CMS exists.
+
+The rest of the sitemap (Online Therapy, How I Work, Fees, FAQ, Blog,
+Contact/Book, Privacy Policy) is planned per the Website Plan and Build
+Spec docs but not yet built.
 
 ## Running locally
 
@@ -144,15 +182,22 @@ src/
 │   ├── site.ts        contact numbers, NAP, fees, crisis line, rating,
 │   │                  concerns/testimonials/about content — single source
 │   │                  of truth
-│   └── services.ts    service-page content keyed by slug (hypnotherapy,
-│                      counselling-psychology, expressive-arts-therapy),
-│                      plus servicesHub for the /services overview page
+│   ├── services.ts    service-page content keyed by slug (hypnotherapy,
+│   │                  counselling-psychology, expressive-arts-therapy),
+│   │                  plus servicesHub for the /services overview page
+│   ├── concerns.ts    concern-page content keyed by slug (anxiety-stress,
+│   │                  depression-low-mood, trauma-ptsd,
+│   │                  relationships-family, work-stress-burnout)
+│   └── blog.ts        stub (empty posts[] + getPostsByTag) for concern
+│                      pages' conditional "Related reading" section
 ├── layouts/Layout.astro  page chrome: meta tags, nav, footer, sticky CTA bar
 ├── pages/
 │   ├── index.astro         Home
 │   ├── about.astro         About Aarushi
+│   ├── [slug].astro        reusable concern-page template (root-level,
+│   │                        e.g. /anxiety-stress)
 │   └── services/
-│       ├── index.astro     Services hub/overview
+│       ├── index.astro     Services hub/overview (two-group layout)
 │       └── [slug].astro    reusable service-page template
 └── styles/global.css  design tokens + the `.wrap` container (three tiers:
                        480px mobile column below `md`, the tablet design's
@@ -194,11 +239,11 @@ Tracked in `src/config/site.ts` and inline comments:
 
 ## Not yet built
 
-Per the Build Spec's build order, still ahead: remaining launch-minimum
-pages (About, Services, How I Work, Fees, Contact/Book, Privacy Policy),
-specialty pages, enquiry form + serverless email (Resend), Tina CMS for
-blog + testimonials, paid booking flow (payment rail — Stripe vs Razorpay
-— still undecided), analytics, JSON-LD structured data, sitemap/robots,
-and Netlify deploy. None of these need guessing at; the three docs in
-`design/` (or wherever the Design Brief / Website Plan / Build Spec live)
-spell out the decisions already made and what's still open.
+Per the Build Spec's build order, still ahead: Online Therapy, How I
+Work, Fees, FAQ, Contact/Book, Privacy Policy, the actual blog/CMS (Tina)
+that `blog.ts` is stubbed for, enquiry form + serverless email (Resend),
+paid booking flow (payment rail — Stripe vs Razorpay — still undecided),
+analytics, JSON-LD structured data, sitemap/robots, and Netlify deploy.
+None of these need guessing at; the three docs in `design/` (or wherever
+the Design Brief / Website Plan / Build Spec live) spell out the
+decisions already made and what's still open.

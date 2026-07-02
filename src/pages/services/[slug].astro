@@ -6,6 +6,7 @@ import ConcernCard from "../../components/ConcernCard.astro";
 import Section from "../../components/Section.astro";
 import ClosingCta from "../../components/ClosingCta.astro";
 import { services, type ServiceContent } from "../../config/services";
+import { concerns } from "../../config/concerns";
 import { site } from "../../config/site";
 import heroPhoto from "../../assets/images/aarushi-hero.webp";
 
@@ -220,6 +221,28 @@ const heading = "md:mx-auto md:max-w-[560px] md:text-center lg:max-w-[640px]";
       }
     </div>
   </Section>
+
+  <!-- ===== EXPLORE BY CONCERN — reciprocal links back from the modality pages ===== -->
+  <div class="wrap pb-8 pt-2 text-center md:pb-10">
+    <p class="m-0 text-[13px] font-semibold uppercase tracking-[0.02em] text-ink-softer md:text-sm">
+      Wondering if this fits what you're going through?
+    </p>
+    <div class="mt-3 flex flex-wrap justify-center gap-x-2 gap-y-1.5 md:mt-4">
+      {
+        Object.values(concerns).map((concern, i) => (
+          <>
+            {i > 0 && <span class="text-ink-muted" aria-hidden="true">·</span>}
+            <a
+              href={`/${concern.slug}`}
+              class="text-[13.5px] font-semibold text-terracotta underline decoration-[rgba(192,118,90,0.35)] underline-offset-[3px] md:text-sm"
+            >
+              {concern.eyebrow}
+            </a>
+          </>
+        ))
+      }
+    </div>
+  </div>
 
   <!-- ===== SOFT CTA ===== -->
   <ClosingCta heading={content.cta.heading} subhead={content.cta.subhead} />

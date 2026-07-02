@@ -1,0 +1,150 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import ConcernCard from "../components/ConcernCard.astro";
+import Section from "../components/Section.astro";
+import ClosingCta from "../components/ClosingCta.astro";
+import { concerns, type ConcernContent } from "../config/concerns";
+import { getPostsByTag } from "../config/blog";
+
+export function getStaticPaths() {
+  return Object.entries(concerns).map(([slug, content]) => ({
+    params: { slug },
+    props: { content },
+  }));
+}
+
+interface Props {
+  content: ConcernContent;
+}
+
+const { content } = Astro.props;
+const relatedPosts = getPostsByTag(content.relatedReadingTag);
+
+const heading = "md:mx-auto md:max-w-[560px] md:text-center lg:max-w-[640px]";
+---
+
+<Layout title={content.seoTitle} description={content.seoDescription}>
+  <!-- ===== HERO / RECOGNITION — no photo; soft shapes. Accent varies per concern. ===== -->
+  <div class="relative overflow-hidden">
+    {
+      content.accent === "warm" ? (
+        <>
+          <div class="absolute -right-[80px] -top-24 h-[250px] w-[250px] rounded-[55%_45%_48%_52%/50%_55%_45%_50%] bg-clay-200 md:-top-28 md:h-[320px] md:w-[320px] lg:-right-20 lg:-top-32 lg:h-[400px] lg:w-[400px]" />
+          <div class="absolute -left-16 top-[150px] h-[130px] w-[130px] rounded-[48%_52%_45%_55%/55%_48%_52%_45%] bg-clay-100 md:top-auto md:-bottom-8 md:-left-[50px] md:h-[160px] md:w-[160px] lg:-left-16 lg:-bottom-5 lg:h-[190px] lg:w-[190px]" />
+        </>
+      ) : content.accent === "soft" ? (
+        <>
+          <div class="absolute -right-[70px] -top-20 h-[210px] w-[210px] rounded-[58%_42%_47%_53%/55%_44%_56%_45%] bg-sage-50/60 md:-top-24 md:h-[270px] md:w-[270px] lg:-right-16 lg:-top-28 lg:h-[330px] lg:w-[330px]" />
+          <div class="absolute -left-14 top-[160px] h-[100px] w-[100px] rounded-[50%_50%_45%_55%/55%_50%_50%_45%] bg-clay-100/50 md:top-auto md:-bottom-6 md:-left-[46px] md:h-[130px] md:w-[130px] lg:-left-14 lg:-bottom-3 lg:h-[150px] lg:w-[150px]" />
+        </>
+      ) : (
+        <>
+          <div class="absolute -right-[70px] -top-20 h-[220px] w-[220px] rounded-[58%_42%_47%_53%/55%_44%_56%_45%] bg-sage-100 md:-top-24 md:h-[280px] md:w-[280px] lg:-right-16 lg:-top-28 lg:h-[340px] lg:w-[340px]" />
+          <div class="absolute -left-14 top-[170px] h-[110px] w-[110px] rounded-[50%_50%_45%_55%/55%_50%_50%_45%] bg-sage-50 md:top-auto md:-bottom-8 md:-left-[50px] md:h-[140px] md:w-[140px] lg:-left-16 lg:-bottom-5 lg:h-[170px] lg:w-[170px]" />
+        </>
+      )
+    }
+
+    <Header />
+
+    <div class="wrap relative pb-10 pt-[22px] md:pb-12 md:pt-12 md:text-center lg:pb-14 lg:pt-14">
+      <div class="mb-2.5 font-display text-sm font-semibold tracking-[0.01em] text-terracotta md:mx-auto md:mb-3 md:text-[15px] lg:mb-3.5 lg:text-base">
+        {content.eyebrow}
+      </div>
+      <h1 class="m-0 text-balance font-display text-[31px] font-bold leading-[1.14] tracking-[-0.02em] text-ink md:mx-auto md:max-w-[600px] md:text-[40px] md:leading-[1.1] lg:max-w-[720px] lg:text-[50px] lg:leading-[1.06]">
+        {content.headline}
+      </h1>
+      <p class="mt-3.5 text-[16px] leading-[1.6] text-ink-soft md:mx-auto md:mt-4 md:max-w-[560px] md:text-[17.5px] lg:max-w-[640px] lg:text-[18.5px]">
+        {content.lead}
+      </p>
+    </div>
+  </div>
+
+  <!-- ===== WHAT IT CAN FEEL LIKE ===== -->
+  <Section innerClass="wrap pb-2 pt-2 md:pb-4 lg:pb-6">
+    <div class={heading}>
+      <div class="font-display text-[23px] font-bold leading-[1.15] text-ink md:text-[28px] lg:text-[32px]">
+        {content.feelsLike.heading}
+      </div>
+      <p class="mb-4 mt-2 text-[15px] leading-[1.55] text-ink-soft md:mb-6 md:mt-2.5 md:text-base lg:mb-7">
+        {content.feelsLike.intro}
+      </p>
+    </div>
+    <div class="grid grid-cols-2 gap-[11px] md:gap-4 lg:grid-cols-3 lg:gap-[18px]">
+      {content.feelsLike.items.map((item) => <ConcernCard {...item} />)}
+    </div>
+    <p class="mx-auto mt-5 max-w-[640px] text-[14px] leading-[1.6] text-ink-soft md:mt-6 md:text-center md:text-[14.5px]">
+      {content.feelsLike.closing}
+    </p>
+  </Section>
+
+  <!-- ===== YOU DON'T HAVE TO DO THIS ALONE — compact band, not a full section ===== -->
+  <div class="wrap py-6 md:py-7 lg:py-8">
+    <div class="rounded-[22px] bg-cream-alt px-5 py-5 md:rounded-[24px] md:px-7 md:py-6">
+      <div class="font-display text-[17px] font-bold text-ink md:text-[19px]">{content.reassurance.heading}</div>
+      <p class="mt-1.5 text-[14.5px] leading-[1.6] text-ink-soft md:text-[15px]">{content.reassurance.body}</p>
+    </div>
+  </div>
+
+  <!-- ===== HOW I CAN HELP ===== -->
+  <Section innerClass="wrap pb-2 pt-2 md:pb-4 lg:pb-6">
+    <div class="md:mx-auto md:max-w-[680px]">
+      <div class="font-display text-[23px] font-bold text-ink md:text-[28px] lg:text-[32px]">
+        {content.howICanHelp.heading}
+      </div>
+      <p class="mt-3 text-[16px] leading-[1.7] text-ink-soft md:mt-4 md:text-[17px] lg:text-[18px]">
+        {
+          content.howICanHelp.paragraph.map((seg) =>
+            seg.href ? (
+              <a
+                href={seg.href}
+                class="font-semibold text-terracotta underline decoration-[rgba(192,118,90,0.35)] underline-offset-[3px]"
+              >
+                {seg.text}
+              </a>
+            ) : (
+              seg.text
+            ),
+          )
+        }
+      </p>
+    </div>
+  </Section>
+
+  <!-- ===== WHAT WORKING TOGETHER LOOKS LIKE — compact band ===== -->
+  <div class="wrap pb-8 pt-2 md:pb-10 lg:pb-12">
+    <div class="mx-auto max-w-[680px] border-l-[3px] border-sage py-1 pl-4 md:pl-5">
+      <div class="font-display text-[16px] font-bold text-ink md:text-[17px]">{content.workingTogether.heading}</div>
+      <p class="mt-1 text-[14.5px] leading-[1.6] text-ink-soft md:text-[15px]">{content.workingTogether.body}</p>
+    </div>
+  </div>
+
+  <!-- ===== RELATED READING — renders only when tagged posts exist ===== -->
+  {
+    relatedPosts.length > 0 && (
+      <Section background="alt" innerClass="wrap py-10 md:py-12 lg:py-14">
+        <div class="font-display text-[22px] font-bold text-ink md:text-[26px]">Related reading</div>
+        <div class="mt-5 grid grid-cols-1 gap-4 md:mt-6 md:grid-cols-3 md:gap-4">
+          {relatedPosts.map((post) => (
+            <a href={`/blog/${post.slug}`} class="block rounded-[22px] bg-white p-5 md:rounded-[24px] md:p-6">
+              <div class="font-display text-[16px] font-bold text-ink">{post.title}</div>
+              <p class="mt-2 text-[13.5px] leading-[1.55] text-ink-soft">{post.excerpt}</p>
+              <div class="mt-3 text-xs text-ink-muted">{post.date}</div>
+            </a>
+          ))}
+        </div>
+      </Section>
+    )
+  }
+
+  <!-- ===== SOFT CTA ===== -->
+  <ClosingCta heading={content.cta.heading} subhead={content.cta.subhead} />
+
+  <!-- ===== CRISIS NOTE — a touch more present than service pages' foot note ===== -->
+  <div class="wrap pb-8 md:pb-10">
+    <div class="mx-auto max-w-[640px] rounded-[16px] border border-[rgba(192,118,90,0.2)] bg-cream-alt/70 px-5 py-4 text-center">
+      <p class="m-0 text-[13.5px] leading-[1.6] text-ink-soft md:text-sm">{content.crisisNote}</p>
+    </div>
+  </div>
+</Layout>
