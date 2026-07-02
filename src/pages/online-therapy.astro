@@ -1,0 +1,147 @@
+---
+import Header from "../components/Header.astro";
+import Layout from "../layouts/Layout.astro";
+import ConcernCard from "../components/ConcernCard.astro";
+import Section from "../components/Section.astro";
+import ClosingCta from "../components/ClosingCta.astro";
+import { onlineTherapy } from "../config/onlineTherapy";
+import { concerns } from "../config/concerns";
+import { services } from "../config/services";
+import { genericCrisisNote } from "../config/site";
+
+const heading = "md:mx-auto md:max-w-[560px] md:text-center lg:max-w-[640px]";
+---
+
+<Layout title={onlineTherapy.seoTitle} description={onlineTherapy.seoDescription}>
+  <!-- ===== HERO — organic shapes standing in for a gentle "video call" cue ===== -->
+  <div class="relative overflow-hidden">
+    <div class="absolute -right-[75px] -top-20 h-[230px] w-[230px] rounded-[46%_54%_58%_42%/50%_46%_54%_50%] bg-sage-100 md:-top-24 md:h-[290px] md:w-[290px] lg:-right-16 lg:-top-28 lg:h-[350px] lg:w-[350px]">
+    </div>
+    <div class="absolute -left-14 top-[170px] h-[110px] w-[110px] rounded-[50%_50%_45%_55%/55%_50%_50%_45%] bg-clay-100 md:top-auto md:-bottom-8 md:-left-[50px] md:h-[140px] md:w-[140px] lg:-left-16 lg:-bottom-5 lg:h-[170px] lg:w-[170px]">
+    </div>
+    <div class="absolute right-[60px] top-[240px] hidden h-8 w-8 rounded-[50%_50%_46%_54%] bg-terracotta-light md:block lg:right-[130px] lg:top-[280px] lg:h-10 lg:w-10">
+    </div>
+
+    <Header />
+
+    <div class="wrap relative pb-10 pt-[22px] md:pb-12 md:pt-12 md:text-center lg:pb-14 lg:pt-14">
+      <div class="mb-2.5 font-display text-sm font-semibold tracking-[0.01em] text-terracotta md:mx-auto md:mb-3 md:text-[15px] lg:mb-3.5 lg:text-base">
+        {onlineTherapy.eyebrow}
+      </div>
+      <h1 class="m-0 text-balance font-display text-[31px] font-bold leading-[1.14] tracking-[-0.02em] text-ink md:mx-auto md:max-w-[600px] md:text-[40px] md:leading-[1.1] lg:max-w-[720px] lg:text-[50px] lg:leading-[1.06]">
+        {onlineTherapy.headline}
+      </h1>
+      <p class="mt-3.5 text-[16px] leading-[1.6] text-ink-soft md:mx-auto md:mt-4 md:max-w-[560px] md:text-[17.5px] lg:max-w-[640px] lg:mt-5 lg:text-[18.5px]">
+        {onlineTherapy.lead}
+      </p>
+    </div>
+  </div>
+
+  <!-- ===== HOW IT WORKS ===== -->
+  <Section innerClass="wrap pb-2 pt-2 md:pb-4 lg:pb-6">
+    <div class="md:mx-auto md:max-w-[680px]">
+      <div class="font-display text-[22px] font-bold text-ink md:text-[26px] lg:text-[30px]">
+        {onlineTherapy.howItWorks.heading}
+      </div>
+      <p class="mt-3 text-[15.5px] leading-[1.65] text-ink-soft md:mt-4 md:text-base lg:text-[17px]">
+        {onlineTherapy.howItWorks.body}
+      </p>
+    </div>
+  </Section>
+
+  <!-- ===== WHO IT'S GOOD FOR ===== -->
+  <Section background="alt" class="mt-6 md:mt-9 lg:mt-11" innerClass="wrap py-8 md:py-10 lg:py-12">
+    <div class={heading}>
+      <div class="font-display text-[22px] font-bold leading-[1.15] text-ink md:text-[26px] lg:text-[30px]">
+        {onlineTherapy.whoItsFor.heading}
+      </div>
+      <p class="mb-4 mt-2 text-[15px] leading-[1.55] text-ink-soft md:mb-6 md:mt-2.5 md:text-base">
+        {onlineTherapy.whoItsFor.intro}
+      </p>
+    </div>
+    <div class="grid grid-cols-2 gap-[11px] md:grid-cols-3 md:gap-4 lg:gap-[18px]">
+      {onlineTherapy.whoItsFor.items.map((item) => <ConcernCard {...item} />)}
+    </div>
+    <p class="mx-auto mt-5 max-w-[640px] text-[14px] leading-[1.6] text-ink-soft md:mt-6 md:text-center md:text-[14.5px]">
+      {onlineTherapy.whoItsFor.closing}
+    </p>
+  </Section>
+
+  <!-- ===== IS IT EFFECTIVE + PRIVATE SPACE — compact bands ===== -->
+  <div class="wrap flex flex-col gap-5 pb-6 pt-6 md:flex-row md:gap-6 md:pb-8 md:pt-8 lg:gap-8">
+    <div class="rounded-[22px] bg-white p-5 md:flex-1 md:rounded-[24px] md:p-6">
+      <div class="font-display text-[16.5px] font-bold text-ink md:text-[18px]">
+        {onlineTherapy.effectiveness.heading}
+      </div>
+      <p class="mt-1.5 text-[14.5px] leading-[1.6] text-ink-soft md:text-[15px]">{onlineTherapy.effectiveness.body}</p>
+    </div>
+    <div class="rounded-[22px] bg-white p-5 md:flex-1 md:rounded-[24px] md:p-6">
+      <div class="font-display text-[16.5px] font-bold text-ink md:text-[18px]">
+        {onlineTherapy.privateSpace.heading}
+      </div>
+      <p class="mt-1.5 text-[14.5px] leading-[1.6] text-ink-soft md:text-[15px]">{onlineTherapy.privateSpace.body}</p>
+    </div>
+  </div>
+
+  <!-- ===== HOW I WORK ONLINE ===== -->
+  <Section innerClass="wrap pb-8 pt-2 md:pb-10 lg:pb-12">
+    <div class="md:mx-auto md:max-w-[680px]">
+      <div class="font-display text-[22px] font-bold text-ink md:text-[26px] lg:text-[30px]">
+        {onlineTherapy.howIWorkOnline.heading}
+      </div>
+      <p class="mt-3 text-[15.5px] leading-[1.65] text-ink-soft md:mt-4 md:text-base lg:text-[17px]">
+        {onlineTherapy.howIWorkOnline.body}
+      </p>
+    </div>
+  </Section>
+
+  <!-- ===== CROSS-LINKS — to concern pages and the modality/service pages ===== -->
+  <div class="wrap pb-3 text-center">
+    <p class="m-0 text-[13px] font-semibold uppercase tracking-[0.02em] text-ink-softer md:text-sm">
+      Wondering if this fits what you're going through?
+    </p>
+    <div class="mt-3 flex flex-wrap justify-center gap-x-2 gap-y-1.5 md:mt-4">
+      {
+        Object.values(concerns).map((concern, i) => (
+          <>
+            {i > 0 && <span class="text-ink-muted" aria-hidden="true">·</span>}
+            <a
+              href={`/${concern.slug}`}
+              class="text-[13.5px] font-semibold text-terracotta underline decoration-[rgba(192,118,90,0.35)] underline-offset-[3px] md:text-sm"
+            >
+              {concern.eyebrow}
+            </a>
+          </>
+        ))
+      }
+    </div>
+  </div>
+  <div class="wrap pb-8 pt-4 text-center md:pb-10">
+    <p class="m-0 text-[13px] font-semibold uppercase tracking-[0.02em] text-ink-softer md:text-sm">
+      Ways we could work together
+    </p>
+    <div class="mt-3 flex flex-wrap justify-center gap-x-2 gap-y-1.5 md:mt-4">
+      {
+        Object.values(services).map((service, i) => (
+          <>
+            {i > 0 && <span class="text-ink-muted" aria-hidden="true">·</span>}
+            <a
+              href={`/services/${service.slug}`}
+              class="text-[13.5px] font-semibold text-terracotta underline decoration-[rgba(192,118,90,0.35)] underline-offset-[3px] md:text-sm"
+            >
+              {service.eyebrow}
+            </a>
+          </>
+        ))
+      }
+    </div>
+  </div>
+
+  <!-- ===== SOFT CTA ===== -->
+  <ClosingCta heading={onlineTherapy.cta.heading} subhead={onlineTherapy.cta.subhead} />
+
+  <!-- ===== SMALL FOOT-OF-PAGE CRISIS NOTE ===== -->
+  <div class="wrap pb-6 text-center md:pb-8">
+    <p class="m-0 text-xs leading-[1.6] text-ink-muted md:text-[13px]">{genericCrisisNote}</p>
+  </div>
+</Layout>

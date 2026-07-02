@@ -1,0 +1,88 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Pending from "../components/Pending.astro";
+import { privacy, type Part } from "../config/privacy";
+---
+
+<Layout title={privacy.seoTitle} description={privacy.seoDescription} noindex>
+  <Header />
+
+  <div class="wrap py-8 md:py-12 lg:py-14">
+    <div class="mx-auto max-w-[680px]">
+      <h1 class="m-0 font-display text-[27px] font-bold leading-[1.15] text-ink md:text-[32px] lg:text-[36px]">
+        Privacy Policy
+      </h1>
+      <p class="mt-2 text-[13.5px] text-ink-muted md:text-sm">
+        Last updated:{" "}
+        {typeof privacy.lastUpdated === "string" ? privacy.lastUpdated : <Pending>{privacy.lastUpdated.pending}</Pending>}
+      </p>
+
+      <div class="mt-6 flex flex-col gap-4 text-[15.5px] leading-[1.75] text-ink-soft md:mt-8 md:text-base">
+        {
+          privacy.intro.map((paragraph) => (
+            <p class="m-0">
+              {paragraph.map((part: Part) => (typeof part === "string" ? part : <Pending>{part.pending}</Pending>))}
+            </p>
+          ))
+        }
+      </div>
+
+      <div class="mt-8 flex flex-col gap-7 md:mt-10 md:gap-8">
+        {
+          privacy.sections.map((section) => (
+            <div>
+              <h2 class="m-0 font-display text-[19px] font-bold text-ink md:text-[21px]">{section.heading}</h2>
+
+              {section.paragraphs && (
+                <div class="mt-2.5 flex flex-col gap-3 text-[15.5px] leading-[1.75] text-ink-soft md:text-base">
+                  {section.paragraphs.map((paragraph) => (
+                    <p class="m-0">
+                      {paragraph.map((part) => (typeof part === "string" ? part : <Pending>{part.pending}</Pending>))}
+                    </p>
+                  ))}
+                </div>
+              )}
+
+              {section.intro && (
+                <p class="m-0 mt-2.5 text-[15.5px] leading-[1.75] text-ink-soft md:text-base">{section.intro}</p>
+              )}
+
+              {section.list && (
+                <ul class="m-0 mt-3 flex list-none flex-col gap-2.5 p-0">
+                  {section.list.map((item) => (
+                    <li class="flex items-start gap-2.5">
+                      <span class="mt-2.5 h-[5px] w-[5px] flex-none rounded-full bg-ink-muted" />
+                      <span class="text-[15px] leading-[1.7] text-ink-soft md:text-[15.5px]">
+                        {typeof item === "string" ? (
+                          item
+                        ) : (
+                          <>
+                            <strong class="font-display font-semibold text-ink">{item.lead}</strong>
+                            {item.parts.map((part) => (typeof part === "string" ? part : <Pending>{part.pending}</Pending>))}
+                          </>
+                        )}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              {section.callout && (
+                <p class="m-0 mt-4 rounded-[14px] bg-cream-alt px-4 py-3 text-[14px] leading-[1.6] text-ink-soft md:text-[14.5px]">
+                  {section.callout}
+                </p>
+              )}
+
+              {section.closing && (
+                <p class="m-0 mt-3 text-[15.5px] leading-[1.75] text-ink-soft md:text-base">
+                  {section.closing.map((part) => (typeof part === "string" ? part : <Pending>{part.pending}</Pending>))}
+                </p>
+              )}
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</Layout>

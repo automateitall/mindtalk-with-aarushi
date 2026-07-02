@@ -18,5 +18,11 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
 
-  integrations: [mdx(), sitemap()]
+  integrations: [
+    mdx(),
+    sitemap({
+      // Keep noindex pages (e.g. /privacy-policy) out of the sitemap too.
+      filter: (page) => !page.includes('/privacy-policy'),
+    }),
+  ]
 });

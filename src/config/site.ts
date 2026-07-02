@@ -190,6 +190,14 @@ export const site = {
   ],
 } as const;
 
+// Shared foot-of-page crisis note for pages without a per-page custom one
+// (concern pages have their own; services.ts derives an identical copy of
+// this same string for its own pages). Derived, not hardcoded, so it can't
+// drift from site.crisis.teleManas.
+const teleManasName = site.crisis.teleManas.label.split(" (")[0];
+const teleManasNumber = site.crisis.teleManas.numbers[0];
+export const genericCrisisNote = `This page isn't for emergencies. If you need urgent support, ${teleManasName} is free and available 24/7: ${teleManasNumber}.`;
+
 export function waLink(message: string = site.whatsappMessage) {
   return `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(message)}`;
 }

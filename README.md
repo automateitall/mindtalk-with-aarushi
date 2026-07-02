@@ -8,16 +8,17 @@ prototypes this build implements live in `design/` for reference.
 
 ## Status
 
-**13+ pages**: Home, About, a Services hub, three service pages
+**16+ pages**: Home, About, a Services hub, three service pages
 (Hypnotherapy, Counselling Psychology, Expressive Arts Therapy) on a
 reusable template, five concern pages (Anxiety & Stress, Depression &
 Low Mood, Trauma & PTSD, Relationships & Family, Work Stress & Burnout)
-on a second reusable template, and a blog (index + a per-post template,
-backed by an Astro content collection, currently 3 sample posts) — all
-responsive across three tiers (mobile / tablet / desktop). Home was
-implemented from three Claude Design exports; every other page was built
-from written specs + copy (no Claude Design mockups), reusing the same
-components, tokens, and breakpoint system for visual consistency.
+on a second reusable template, a blog (index + a per-post template,
+backed by an Astro content collection, currently 3 sample posts), FAQ
+(accordion), Online Therapy, and a Privacy Policy — all responsive across
+three tiers (mobile / tablet / desktop). Home was implemented from three
+Claude Design exports; every other page was built from written specs +
+copy (no Claude Design mockups), reusing the same components, tokens, and
+breakpoint system for visual consistency.
 
 - `design/project/MindTalk Homepage.dc.html` — mobile ("2b — Warm Organic",
   locked in during design review)
@@ -189,9 +190,38 @@ confirmed against real review data (see "Pending inputs" below) — so
 publishing it as machine-readable review markup would risk a manual
 action. Revisit once a real rating is confirmed.
 
-The rest of the sitemap (Online Therapy, How I Work, Fees, FAQ,
-Contact/Book, Privacy Policy) is planned per the Website Plan and Build
-Spec docs but not yet built.
+**FAQ** (`/faq`) is a native `<details>`/`<summary>` accordion — no JS
+needed for the expand/collapse — built from `src/config/faq.ts`. The
+"online sessions" answer inline-links to `/online-therapy`.
+
+**Online Therapy** (`/online-therapy`) is a service-style page (hero →
+how it works → "who it's good for" reusing the homepage's `ConcernCard`
+grid → effectiveness/private-space compact bands → how I work online),
+built from `src/config/onlineTherapy.ts`. Cross-links out to all 5
+concern pages and all 3 service pages ("where natural," per the design
+brief) — not in the main nav (same reasoning as concern pages: discovered
+contextually, not as a hub-level destination).
+
+**Privacy Policy** (`/privacy-policy`) is a DPDP-aligned *template*, not
+final legal text — the source copy doc is explicit that every
+`[[CONFIRM]]` placeholder must be checked with Aarushi and ideally
+reviewed by someone familiar with India's DPDP Act before launch.
+`src/config/privacy.ts` keeps every one of those placeholders (data
+contact, retention period, security measures, service providers used,
+analytics tool if any, grievance contact, children/minors handling, "last
+updated" date) as a distinct `pending` marker, rendered inline via a new
+`<Pending>` component — nothing is invented or silently filled in. The
+page itself is `noindex` (`Layout`'s new `noindex` prop) and excluded
+from the sitemap (`astro.config.mjs`'s sitemap `filter`), reuses the
+site's typography/tokens but skips cards/hero/CTA per the design brief —
+just a clean ~680px-wide readable column. **Do not publish as-is** — see
+"Pending inputs" below.
+
+All three are linked from the footer (`Footer.astro`); not the main nav,
+consistent with how concern pages and service sub-pages are handled.
+
+The rest of the sitemap (How I Work, Fees, Contact/Book) is planned per
+the Website Plan and Build Spec docs but not yet built.
 
 ## Running locally
 
@@ -290,18 +320,26 @@ Tracked in `src/config/site.ts` and inline comments:
   placeholder (`mindtalkwitharushi.example`). Feeds canonical URLs, the
   sitemap, `robots.txt`, and JSON-LD — swap it (and nothing else) once a
   real domain is bought/decided.
+- **Privacy Policy content** — `src/config/privacy.ts` is a DPDP-aligned
+  template with every data-handling specific (data/grievance contact,
+  retention period, security measures, service providers used, analytics
+  tool if any, children/minors handling, "last updated" date) left as a
+  flagged `pending` marker — see "Status" above. Every one needs Aarushi's
+  actual practice, not an invented answer, and the page should get a
+  DPDP-familiar legal review before it's un-`noindex`'d and launched.
 
 ## Not yet built
 
-Per the Build Spec's build order, still ahead: Online Therapy, How I
-Work, Fees, FAQ, Contact/Book, Privacy Policy, finishing Tina CMS
-end-to-end (config is scaffolded — see "Blog" above — but unverified past
-`astro check`/`astro build` since this sandbox can't reach Tina Cloud's
-API; needs a run somewhere with normal internet access), enquiry form +
-serverless email (Resend), paid booking flow (payment rail — Stripe vs
-Razorpay — still undecided), analytics, and Netlify deploy (which is also
-when `site.url` needs to become a real domain — see "Pending inputs").
-Sitemap, robots.txt, and JSON-LD structured data are done (see "Blog"
+Per the Build Spec's build order, still ahead: How I Work, Fees,
+Contact/Book, finishing Tina CMS end-to-end (config is scaffolded — see
+"Blog" above — but unverified past `astro check`/`astro build` since this
+sandbox can't reach Tina Cloud's API; needs a run somewhere with normal
+internet access), filling in the Privacy Policy's pending specifics (see
+"Pending inputs"), enquiry form + serverless email (Resend), paid booking
+flow (payment rail — Stripe vs Razorpay — still undecided), analytics,
+and Netlify deploy (which is also when `site.url` needs to become a real
+domain). Sitemap, robots.txt, JSON-LD structured data, FAQ, Online
+Therapy, and a (provisional) Privacy Policy are all done (see "Status"
 above). None of these need guessing at; the three docs in `design/` (or
 wherever the Design Brief / Website Plan / Build Spec live) spell out the
 decisions already made and what's still open.

@@ -1,0 +1,18 @@
+---
+// Inline "not yet confirmed" marker for legal/compliance copy (Privacy
+// Policy) — same "flag, don't invent" convention as the pending
+// credential notes elsewhere on the site, just styled for a value sitting
+// mid-sentence rather than a trailing aside.
+interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props;
+---
+
+<span
+  class:list={[
+    "rounded-full bg-clay-100/70 px-2 py-0.5 text-[0.82em] font-semibold not-italic text-ink-softer",
+    className,
+  ]}
+  ><slot /></span
+>
