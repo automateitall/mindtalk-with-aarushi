@@ -1,8 +1,10 @@
 ---
-title: "Three grounding techniques for when your mind won't slow down"
-date: 2026-05-12
-excerpt: "Simple, physical ways to interrupt a spiral of racing thoughts — none of them require anything but you."
-tags: ["anxiety"]
+title: Three grounding techniques for when your mind won't slow down
+date: 2026-05-12T00:00:00.000Z
+excerpt: 'Simple, physical ways to interrupt a spiral of racing thoughts — none of them require anything but you.'
+coverImage: /uploads/PXL_20250628_095602834.RAW-01.COVER.jpg
+tags:
+  - anxiety
 published: true
 ---
 
